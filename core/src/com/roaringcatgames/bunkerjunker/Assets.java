@@ -73,4 +73,27 @@ public class Assets {
     public static Array<TextureAtlas.AtlasRegion> getPlayerIdleFrames(){
         return getCachedAnimationFrames(ANI_ATLAS, "player");
     }
+
+    public static TextureAtlas.AtlasRegion getHouseRegion(){
+        return getCachedRegion(SPRITE_ATLAS, "house");
+    }
+
+    public static TextureAtlas.AtlasRegion getIndicatorRegion(String sensorType){
+
+        TextureAtlas.AtlasRegion result;
+        switch (sensorType){
+            case AppConstants.SENSOR_STAIR_DOWN:
+                result = getCachedRegion(SPRITE_ATLAS, "down");
+                break;
+            case AppConstants.SENSOR_STAIR_UP:
+                result = getCachedRegion(SPRITE_ATLAS, "up");
+                break;
+            default:
+                result = getCachedRegion(SPRITE_ATLAS, "tree");
+                break;
+        }
+
+        return result;
+    }
+
 }
