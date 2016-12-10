@@ -62,3 +62,9 @@ build/
 
 ## OS Specific
 .DS_Store
+
+
+## Game Specific
+core/assets/animations/
+core/assets/sprites/
+core/assets/loading/

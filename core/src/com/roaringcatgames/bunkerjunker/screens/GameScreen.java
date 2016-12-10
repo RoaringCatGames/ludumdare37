@@ -1,37 +1,37 @@
 package com.roaringcatgames.bunkerjunker.screens;
 
 import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.roaringcatgames.bunkerjunker.AppConstants;
-import com.roaringcatgames.bunkerjunker.Assets;
-import com.roaringcatgames.kitten2d.ashley.K2ComponentMappers;
-import com.roaringcatgames.kitten2d.ashley.components.BoundsComponent;
-import com.roaringcatgames.kitten2d.ashley.components.TextureComponent;
-import com.roaringcatgames.kitten2d.ashley.components.TransformComponent;
+import com.roaringcatgames.bunkerjunker.components.PlayerComponent;
+import com.roaringcatgames.bunkerjunker.systems.CameraPositionSystem;
+import com.roaringcatgames.bunkerjunker.systems.DebugGridSystem;
+import com.roaringcatgames.bunkerjunker.systems.PlayerMovementSystem;
+import com.roaringcatgames.bunkerjunker.systems.PlayerSetupSystem;
 import com.roaringcatgames.kitten2d.ashley.systems.*;
 import com.roaringcatgames.kitten2d.gdx.helpers.IGameProcessor;
 import com.roaringcatgames.kitten2d.gdx.screens.LazyInitScreen;
 
 /**
- * Screen to Load the Menu
+ * THe screen that runs the actual game.
  */
-public class MenuScreen extends LazyInitScreen implements InputProcessor{
+public class GameScreen extends LazyInitScreen implements InputProcessor {
     private IGameProcessor game;
     private Engine engine;
     private World world;
     private Vector2 gravity = new Vector2(0f, -9.8f);
 
-    ////////////////////////
-    //User Interactions
-    ////////////////////////
-    private Vector2 touchPoint = new Vector2(0f, 0f);
-    private Entity startGameButton;
+    private final float ZOOM_SPEED = 0.05f;
+    private final float MAX_ZOOM = 1.8f;
+    private final float MIN_ZOOM = 0.75f;
 
-    public MenuScreen(IGameProcessor game){
+    public GameScreen(IGameProcessor game) {
         this.game = game;
         this.world = new World(gravity, true);
     }
@@ -43,7 +43,7 @@ public class MenuScreen extends LazyInitScreen implements InputProcessor{
     }
 
     @Override
-    public void hide(){
+    public void hide() {
         super.hide();
         game.removeInputProcessor(this);
     }
@@ -52,16 +52,35 @@ public class MenuScreen extends LazyInitScreen implements InputProcessor{
     protected void init() {
         this.engine = new PooledEngine();
 
+        //Initializer Systems
+        DebugGridSystem debugGridSystem = new DebugGridSystem(AppConstants.W * 5f, AppConstants.H * 5f, 2f);
+        PlayerSetupSystem playerSetupSystem = new PlayerSetupSystem(game, AppConstants.W/2f, 4f);
+
         RenderingSystem renderingSystem = new RenderingSystem(game.getBatch(), game.getCamera(), AppConstants.PPM);
         DebugSystem debugRenderingSystem = new DebugSystem(game.getCamera());
         Box2DPhysicsSystem physicsSystem = new Box2DPhysicsSystem(world);
         Box2DPhysicsDebugSystem physicsDebugSystem = new Box2DPhysicsDebugSystem(world, game.getCamera());
+
         AnimationSystem animationSystem = new AnimationSystem();
+        MovementSystem movementSystem = new MovementSystem();
         BoundsSystem boundsSystem = new BoundsSystem();
+        FollowerSystem followerSystem = new FollowerSystem(Family.all(PlayerComponent.class).get());
+
+        PlayerMovementSystem playerMovementSystem = new PlayerMovementSystem(game);
+        CameraPositionSystem cameraPositionSystem = new CameraPositionSystem();
+
+        //Setup
+        engine.addSystem(debugGridSystem);
+        engine.addSystem(playerSetupSystem);
+
         //Work
         engine.addSystem(physicsSystem);
         engine.addSystem(animationSystem);
+        engine.addSystem(movementSystem);
+        engine.addSystem(followerSystem);
+        engine.addSystem(playerMovementSystem);
         engine.addSystem(boundsSystem);
+        engine.addSystem(cameraPositionSystem);
 
         //Rendering
         engine.addSystem(renderingSystem);
@@ -70,20 +89,13 @@ public class MenuScreen extends LazyInitScreen implements InputProcessor{
         engine.addSystem(debugRenderingSystem);
         engine.addSystem(physicsDebugSystem);
 
-        startGameButton = engine.createEntity();
-        startGameButton.add(TransformComponent.create(engine)
-                .setPosition(AppConstants.W/2f, AppConstants.H/2f));
-        startGameButton.add(TextureComponent.create(engine)
-            .setRegion(Assets.getStartGameRegion()));
-        startGameButton.add(BoundsComponent.create(engine)
-            .setBounds(0f, 0f, 5f, 1f));
-
-        engine.addEntity(startGameButton);
+        Gdx.app.log("MenuScreen", "Menu Loaded");
     }
 
     @Override
     protected void update(float deltaChange) {
-        engine.update(deltaChange);
+        float deltaToApply = Math.min(deltaChange, AppConstants.MAX_DELTA_TICK);
+        engine.update(deltaToApply);
     }
 
     ////////////////////////
@@ -107,13 +119,6 @@ public class MenuScreen extends LazyInitScreen implements InputProcessor{
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        touchPoint.set(screenX, screenY);
-        game.getViewport().unproject(touchPoint);
-
-        if(K2ComponentMappers.bounds.has(startGameButton) &&
-           K2ComponentMappers.bounds.get(startGameButton).bounds.contains(touchPoint)){
-            this.game.switchScreens("GAME");
-        }
         return false;
     }
 
@@ -134,6 +139,11 @@ public class MenuScreen extends LazyInitScreen implements InputProcessor{
 
     @Override
     public boolean scrolled(int amount) {
+        float zoom = this.game.getCamera().zoom;
+        zoom += amount* ZOOM_SPEED;
+        this.game.getCamera().zoom = MathUtils.clamp(zoom, MIN_ZOOM, MAX_ZOOM);
+
+        Gdx.app.log("MENU SCREEN", "Scrolled " + amount + " Zoom Result " + this.game.getCamera().zoom);
         return false;
     }
 }

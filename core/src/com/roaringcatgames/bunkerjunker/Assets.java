@@ -29,7 +29,7 @@ public class Assets {
         am = new AssetManager();
 
         am.load(LOADING_ATLAS, TEXTURE_ATLAS);
-        //am.load(SPRITE_ATLAS, TEXTURE_ATLAS);
+        am.load(SPRITE_ATLAS, TEXTURE_ATLAS);
         am.finishLoading();
         am.load(ANI_ATLAS, TEXTURE_ATLAS);
 
@@ -53,10 +53,23 @@ public class Assets {
         return spriteCache.get(name);
     }
 
+    /////////////////
+    //LOADING SCREEN
+    /////////////////
     public static Array<TextureAtlas.AtlasRegion> getSplashScreenFrames(){
         return getCachedAnimationFrames(LOADING_ATLAS, "loading");
     }
 
+    /////////////////
+    //MENU SCREEN
+    /////////////////
+    public static TextureAtlas.AtlasRegion getStartGameRegion(){
+        return getCachedRegion(SPRITE_ATLAS, "menu/playgame");
+    }
+
+    /////////////////
+    //GAME SCREEN
+    /////////////////
     public static Array<TextureAtlas.AtlasRegion> getPlayerIdleFrames(){
         return getCachedAnimationFrames(ANI_ATLAS, "player");
     }
