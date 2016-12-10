@@ -1,0 +1,20 @@
+
+animations.png
+size: 128,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+player
+  rotate: false
+  xy: 0, 0
+  size: 40, 80
+  orig: 40, 80
+  offset: 0, 0
+  index: 0
+player
+  rotate: false
+  xy: 42, 0
+  size: 40, 80
+  orig: 40, 80
+  offset: 0, 0
+  index: 1
