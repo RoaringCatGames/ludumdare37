@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.roaringcatgames.bunkerjunker.*;
 import com.roaringcatgames.bunkerjunker.components.CameraComponent;
+import com.roaringcatgames.bunkerjunker.components.EncumberedComponent;
 import com.roaringcatgames.bunkerjunker.components.PlayerComponent;
 import com.roaringcatgames.bunkerjunker.components.SupplyComponent;
 import com.roaringcatgames.bunkerjunker.utils.Box2DUtil;
@@ -119,6 +120,11 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
                     .addTween(Tween.to(supply, K2EntityTweenAccessor.POSITION_Z, 0.5f)
                         .target(Z.carriedSupply)));
 
+                //5. Apply Encumberence to Player
+                SupplyComponent sc = Mappers.supply.get(supply);
+                player.add(EncumberedComponent.create(getEngine())
+                    .setWeight(sc.weight));
+
                 break;
             }
         }
@@ -168,6 +174,9 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
 
             }
         }
+
+        //4. Remove Encumberence from Player
+        player.remove(EncumberedComponent.class);
     }
 
     private float getMinYFromCurrentPosition(float y){

@@ -28,9 +28,10 @@ public class SuppliesSetupSystem extends EntitySystem{
         tree.add(TextureComponent.create(engine)
             .setRegion(Assets.getTreeRegion()));
         tree.add(SupplyComponent.create(engine)
-            .setWeight(3f)
+            .setWeight(100f)
             .setRotatedOnPickup(true)
-            .addCategoryWeight(Supplies.COMFORT, 2));
+            .addCategoryWeight(Supplies.COMFORT, 2)
+            .addCategoryWeight(Supplies.ENVIRONMENT, 20));
         engine.addEntity(tree);
     }
 }
