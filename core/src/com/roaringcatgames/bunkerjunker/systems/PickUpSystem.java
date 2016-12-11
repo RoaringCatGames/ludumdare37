@@ -180,6 +180,8 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
             SupplyComponent sc = Mappers.supply.get(supply);
             player.add(EncumberedComponent.create(getEngine())
                     .setWeight(sc.weight));
+
+            Assets.getPickupGruntSfx().play(1f);
         }
     }
 
@@ -226,6 +228,8 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
                         .target(5f).repeatYoyo(1, 0.5f)));
 
             }
+
+            Assets.getThrowGruntSfx().play(1f);
         }
 
         //4. Remove Encumberence from Player
