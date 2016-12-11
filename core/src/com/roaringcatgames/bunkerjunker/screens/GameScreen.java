@@ -60,6 +60,7 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
         StairSensorSetupSystem stairSetupSystem = new StairSensorSetupSystem();
 
         RenderingSystem renderingSystem = new RenderingSystem(game.getBatch(), game.getCamera(), AppConstants.PPM);
+        TextRenderingSystem textRenderingSystem = new TextRenderingSystem(game.getBatch(), game.getGUICamera(), game.getCamera());
         DebugSystem debugRenderingSystem = new DebugSystem(game.getCamera());
         Box2DPhysicsSystem physicsSystem = new Box2DPhysicsSystem(world);
         Box2DPhysicsDebugSystem physicsDebugSystem = new Box2DPhysicsDebugSystem(world, game.getCamera());
@@ -71,6 +72,7 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
         RotationSystem rotationSystem = new RotationSystem();
         TweenSystem tweenSystem = new TweenSystem(new BunkerJunkerTweenAccessor());
 
+        TimerSystem timerSystem = new TimerSystem(60f*4f);
         PlayerMovementSystem playerMovementSystem = new PlayerMovementSystem(game);
         CameraPositionSystem cameraPositionSystem = new CameraPositionSystem();
         StairSystem stairSystem = new StairSystem();
@@ -102,12 +104,14 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
         engine.addSystem(actionIndicatorSystem);
         engine.addSystem(pickUpSystem);
         engine.addSystem(playerAnimationSystem);
+        engine.addSystem(timerSystem);
 
         //Adjustment Systems
         engine.addSystem(environmentBoundsSystem);
 
         //Rendering
         engine.addSystem(renderingSystem);
+        engine.addSystem(textRenderingSystem);
 
         //Debugging
         engine.addSystem(debugRenderingSystem);
