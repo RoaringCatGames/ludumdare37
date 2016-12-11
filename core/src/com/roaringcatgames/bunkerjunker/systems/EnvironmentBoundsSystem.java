@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.MathUtils;
+import com.roaringcatgames.bunkerjunker.AppConstants;
 import com.roaringcatgames.bunkerjunker.components.PlayerComponent;
 import com.roaringcatgames.kitten2d.ashley.K2ComponentMappers;
 import com.roaringcatgames.kitten2d.ashley.components.TransformComponent;
@@ -13,10 +14,6 @@ import com.roaringcatgames.kitten2d.ashley.components.TransformComponent;
  *  determined boundaries.
  */
 public class EnvironmentBoundsSystem extends IteratingSystem {
-
-    private float MIN_X_POS = -65f;
-    private float MAX_X_POS = 65f;
-    private float MAX_X_ELEVATED = 0f;
 
     public EnvironmentBoundsSystem(){
         super(Family.all(PlayerComponent.class).get());
@@ -29,6 +26,6 @@ public class EnvironmentBoundsSystem extends IteratingSystem {
         float x = tc.position.x;
         float y = tc.position.y;
 
-        tc.position.x = MathUtils.clamp(x, MIN_X_POS, (y >= 10f) ? MAX_X_ELEVATED : MAX_X_POS);
+        tc.position.x = MathUtils.clamp(x, AppConstants.MIN_X_POS, (y >= 10f) ? AppConstants.MAX_X_ELEVATED : AppConstants.MAX_X_POS);
     }
 }

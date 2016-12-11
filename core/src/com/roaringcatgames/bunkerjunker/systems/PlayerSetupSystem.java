@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.roaringcatgames.bunkerjunker.Animations;
+import com.roaringcatgames.bunkerjunker.BunkerJunkerTweenAccessor;
 import com.roaringcatgames.bunkerjunker.Z;
 import com.roaringcatgames.bunkerjunker.components.ActionIndicatorComponent;
 import com.roaringcatgames.bunkerjunker.components.CameraComponent;
@@ -89,7 +90,11 @@ public class PlayerSetupSystem extends EntitySystem {
         camera.add(FollowerComponent.create(engine)
             .setTarget(player)
             .setOffset(0f, 6f)
-            .setMode(FollowMode.STICKY));
+            .setFollowSpeed(14.5f)
+            .setMode(FollowMode.MOVETO));
+        camera.add(TweenComponent.create(engine)
+            .addTween(Tween.to(camera, BunkerJunkerTweenAccessor.CAMERA_ZOOM, 1f)
+                .target(1.5f)));
         engine.addEntity(camera);
     }
 

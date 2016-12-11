@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.roaringcatgames.bunkerjunker.AppConstants;
+import com.roaringcatgames.bunkerjunker.BunkerJunkerTweenAccessor;
 import com.roaringcatgames.bunkerjunker.components.PlayerComponent;
 import com.roaringcatgames.bunkerjunker.systems.*;
 import com.roaringcatgames.kitten2d.ashley.systems.*;
@@ -26,8 +27,8 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
     private World world;
     private Vector2 gravity = new Vector2(0f, -9.8f);
 
-    private final float ZOOM_SPEED = 0.05f;
-    private final float MAX_ZOOM = 8.8f;
+    private final float ZOOM_SPEED = 0.1f;
+    private final float MAX_ZOOM = 4.8f;
     private final float MIN_ZOOM = 0.75f;
 
     public GameScreen(IGameProcessor game) {
@@ -68,7 +69,7 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
         BoundsSystem boundsSystem = new BoundsSystem();
         FollowerSystem followerSystem = new FollowerSystem(Family.all(PlayerComponent.class).get());
         RotationSystem rotationSystem = new RotationSystem();
-        TweenSystem tweenSystem = new TweenSystem();
+        TweenSystem tweenSystem = new TweenSystem(new BunkerJunkerTweenAccessor());
 
         PlayerMovementSystem playerMovementSystem = new PlayerMovementSystem(game);
         CameraPositionSystem cameraPositionSystem = new CameraPositionSystem();
@@ -111,6 +112,7 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
         engine.addSystem(physicsDebugSystem);
 
         Gdx.app.log("MenuScreen", "Menu Loaded");
+        game.playBgMusic(AppConstants.GAME_BG_MUSIC);
     }
 
     @Override

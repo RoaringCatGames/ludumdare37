@@ -1,5 +1,6 @@
 package com.roaringcatgames.bunkerjunker.systems;
 
+import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
@@ -9,10 +10,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.roaringcatgames.bunkerjunker.AppConstants;
-import com.roaringcatgames.bunkerjunker.Controls;
-import com.roaringcatgames.bunkerjunker.Mappers;
-import com.roaringcatgames.bunkerjunker.Z;
+import com.roaringcatgames.bunkerjunker.*;
+import com.roaringcatgames.bunkerjunker.components.CameraComponent;
 import com.roaringcatgames.bunkerjunker.components.PlayerComponent;
 import com.roaringcatgames.bunkerjunker.components.SupplyComponent;
 import com.roaringcatgames.bunkerjunker.utils.Box2DUtil;
@@ -149,18 +148,25 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
                 .addTween(Tween.to(currentSupply, K2EntityTweenAccessor.POSITION, 0.25f)
                         .target(tc.position.x, targetY, Z.supply)));
         }else{
-            //TODO: Add Body Component and let it FALL
-            Gdx.app.log("PickupSystem", "Is On Bunker Target");
             BoundsComponent bc = K2ComponentMappers.bounds.get(currentSupply);
             SupplyComponent spc = Mappers.supply.get(currentSupply);
             BodyComponent bdyc = BodyComponent.create(getEngine())
                     .setBody(Box2DUtil.buildBoxBody(world, false, tc.position.x, tc.position.y,
                                                     bc.bounds.width, bc.bounds.height, tc.rotation, spc.weight, 0.5f, 0.5f));
+            bdyc.body.applyLinearImpulse(0f, -bdyc.body.getMass()*100f, bdyc.body.getWorldCenter().x, bdyc.body.getWorldCenter().y, true);
             currentSupply.add(bdyc);
 
             //TRACK the Stats!!
             for(String key:spc.categoryWeights.keys()){
                 AppConstants.addStat(key, spc.categoryWeights.get(key));
+            }
+
+            Entity camEntity = getEngine().getEntitiesFor(Family.all(CameraComponent.class).get()).first();
+            if(camEntity != null){
+                camEntity.add(TweenComponent.create(getEngine())
+                    .addTween(Tween.to(camEntity, BunkerJunkerTweenAccessor.CAMERA_ZOOM, 0.25f)
+                        .target(5f).repeatYoyo(1, 0.5f)));
+
             }
         }
     }

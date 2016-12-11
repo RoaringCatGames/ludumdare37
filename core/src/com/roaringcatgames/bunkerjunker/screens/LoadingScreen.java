@@ -26,7 +26,7 @@ public class LoadingScreen extends LazyInitScreen {
     private IGameProcessor game;
     private Engine engine;
     private float elapsedTime = 0f;
-    private float minSplashSeconds = 3f;
+    private float minSplashSeconds = 1f;
 
     public LoadingScreen(IGameProcessor game){
         this.game = game;

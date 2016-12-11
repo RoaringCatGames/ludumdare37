@@ -3,8 +3,9 @@ package com.roaringcatgames.bunkerjunker.systems;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.physics.box2d.World;
 import com.roaringcatgames.bunkerjunker.AppConstants;
 import com.roaringcatgames.bunkerjunker.Assets;
 import com.roaringcatgames.bunkerjunker.Z;
@@ -12,8 +13,6 @@ import com.roaringcatgames.bunkerjunker.utils.Box2DUtil;
 import com.roaringcatgames.kitten2d.ashley.components.BodyComponent;
 import com.roaringcatgames.kitten2d.ashley.components.TextureComponent;
 import com.roaringcatgames.kitten2d.ashley.components.TransformComponent;
-
-import javax.swing.*;
 
 /**
  * Builds all of the Background Sprites and entities
@@ -40,10 +39,18 @@ public class BackgroundSetupSystem extends EntitySystem {
         Entity bunker = engine.createEntity();
         float x = AppConstants.BUNKER_LEFT + (AppConstants.BUNKER_RIGHT-AppConstants.BUNKER_LEFT)/2f;
         bunker.add(TransformComponent.create(engine)
-            .setPosition(x, -18.25f, Z.rooms));
+            .setPosition(x, -7.75f, Z.rooms));
         bunker.add(TextureComponent.create(engine)
             .setRegion(Assets.getBunkerRegion()));
         engine.addEntity(bunker);
+
+
+        buildLargeTrees(engine);
+        buildBushes(engine);
+        buildDirt(engine);
+        buildLayeredDirt(engine);
+        buildGrass(engine);
+
 
 //        Entity leftTop = buildBasicBox(engine, AppConstants.BUNKER_LEFT, -4f, 1f, 5f);
 //        engine.addEntity(leftTop);
@@ -90,6 +97,117 @@ public class BackgroundSetupSystem extends EntitySystem {
         e.add(bc);
 
         return e;
+    }
+
+    public void buildDirt(Engine engine){
+        float tileMinX = AppConstants.MIN_X_POS*4f;
+        float tileMaxX = AppConstants.MAX_X_POS*4f;
+        float tileSize = 15.95f;
+        float halfTile = 8f;
+
+        int width = MathUtils.ceil((tileMaxX - tileMinX)/16f);
+        int height = 8;
+
+        for(int i=0;i<width;i++){
+            for(int j=0;j<height;j++) {
+                float x = (tileMinX) + halfTile + (tileSize* i);
+                float y = -halfTile - (tileSize*j);
+
+                Entity dirt = engine.createEntity();
+                dirt.add(TextureComponent.create(engine)
+                    .setRegion(Assets.getDirtRegion()));
+                dirt.add(TransformComponent.create(engine)
+                    .setPosition(x, y, Z.dirt));
+                engine.addEntity(dirt);
+            }
+        }
+    }
+
+    public void buildLayeredDirt(Engine engine){
+        float tileMinX = AppConstants.MIN_X_POS*4f;
+        float tileMaxX = AppConstants.MAX_X_POS*4f;
+        float tileSize = 44.95f;
+        float halfTile = 22.5f;
+
+        int width = MathUtils.ceil((tileMaxX - tileMinX)/tileSize);
+
+        for(int i=0;i<width;i++){
+            float x = (tileMinX) + halfTile + (tileSize* i);
+            float y = -3.25f;
+
+            Entity dirt = engine.createEntity();
+            dirt.add(TextureComponent.create(engine)
+                    .setRegion(Assets.getLayeredDirt()));
+            dirt.add(TransformComponent.create(engine)
+                    .setPosition(x, y, Z.layeredDirt));
+            engine.addEntity(dirt);
+        }
+    }
+
+    public void buildGrass(Engine engine){
+        float tileMinX = AppConstants.MIN_X_POS*4f;
+        float tileMaxX = AppConstants.MAX_X_POS*4f;
+        float tileSize = 11.45f;
+        float halfTile = 5.75f;
+
+        int width = MathUtils.ceil((tileMaxX - tileMinX)/tileSize);
+
+        for(int i=0;i<width;i++){
+            float x = (tileMinX) + halfTile + (tileSize* i);
+            float y = 1.345f;
+
+            Entity bushes = engine.createEntity();
+            bushes.add(TextureComponent.create(engine)
+                    .setRegion(Assets.getGrassRegion()));
+            bushes.add(TransformComponent.create(engine)
+                    .setPosition(x, y, Z.grass));
+            engine.addEntity(bushes);
+        }
+    }
+
+    public void buildLargeTrees(Engine engine){
+        float tileMinX = AppConstants.MIN_X_POS*4f;
+        float tileMaxX = AppConstants.MAX_X_POS*4f;
+        float tileSizeX = 44f;
+        float halfTile = 20f;
+        float buffer = tileSizeX*0.75f;
+
+        int width = MathUtils.ceil((tileMaxX - tileMinX)/buffer);
+//
+        for(int i=0;i<width;i++){
+            TextureRegion region = Assets.getBigBush(MathUtils.random(1, 3));
+            float x = (tileMinX) + halfTile + (buffer * i);
+            float y = region.getRegionHeight()/AppConstants.PPM/2f;
+            float z = MathUtils.random() <= 0.499f ? Z.treeline : Z.altTreeline;
+
+            Entity bushes = engine.createEntity();
+            bushes.add(TextureComponent.create(engine)
+                    .setRegion(region));
+            bushes.add(TransformComponent.create(engine)
+                    .setPosition(x, y, z));
+            engine.addEntity(bushes);
+        }
+    }
+
+    public void buildBushes(Engine engine){
+        float tileMinX = AppConstants.MIN_X_POS*4f;
+        float tileMaxX = AppConstants.MAX_X_POS*4f;
+        float tileSize = 27.85f;
+        float halfTile = 13.95f;
+
+        int width = MathUtils.ceil((tileMaxX - tileMinX)/tileSize);
+
+        for(int i=0;i<width;i++){
+            float x = (tileMinX) + halfTile + (tileSize* i);
+            float y = 2.29f;
+
+            Entity bushes = engine.createEntity();
+            bushes.add(TextureComponent.create(engine)
+                    .setRegion(Assets.getBushesRegion()));
+            bushes.add(TransformComponent.create(engine)
+                    .setPosition(x, y, Z.bushes));
+            engine.addEntity(bushes);
+        }
     }
 
 
