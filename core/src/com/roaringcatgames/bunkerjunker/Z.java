@@ -15,6 +15,8 @@ public class Z {
     public static final float supply = 50f;
     public static final float player = 40f;
     public static final float carriedSupply = 30f;
+    public static final float indicator = 29f;
     public static final float foundations = 25f;
     public static final float grass = 10f;
+
 }

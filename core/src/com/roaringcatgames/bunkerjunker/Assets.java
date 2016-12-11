@@ -139,6 +139,15 @@ public class Assets {
             case AppConstants.SENSOR_STAIR_UP:
                 result = getCachedRegion(SPRITE_ATLAS, "up");
                 break;
+            case AppConstants.INDICATOR_PICKUP:
+                result = getCachedRegion(SPRITE_ATLAS, "grab");
+                break;
+            case AppConstants.INDICATOR_DROP:
+                result = getCachedRegion(SPRITE_ATLAS, "drop");
+                break;
+            case AppConstants.INDICATOR_THROW:
+                result = getCachedRegion(SPRITE_ATLAS, "store");
+                break;
             default:
                 result = getCachedRegion(SPRITE_ATLAS, "tree");
                 break;

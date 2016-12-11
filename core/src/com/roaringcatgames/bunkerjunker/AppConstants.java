@@ -26,6 +26,9 @@ public class AppConstants {
 
     public static final String SENSOR_STAIR_UP = "STAIR_UP";
     public static final String SENSOR_STAIR_DOWN = "STAIR_DOWN";
+    public static final String INDICATOR_PICKUP = "PICKUP";
+    public static final String INDICATOR_THROW = "THROW";
+    public static final String INDICATOR_DROP = "DROP";
 
     public static final String GAME_BG_MUSIC = "GAME";
 
