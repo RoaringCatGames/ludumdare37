@@ -24,6 +24,7 @@ public class Assets {
     private static final String ANI_ATLAS = "animations/animations.atlas";
     private static final String SPRITE_ATLAS = "sprites/sprites.atlas";
     private static final String BG_MUSIC = "music/bunker-bg-music.mp3";
+    private static final String LARGE_FONT = "fonts/kalibers-64.fnt";
 
     public static AssetManager load(){
         am = new AssetManager();
@@ -33,6 +34,7 @@ public class Assets {
         am.finishLoading();
         am.load(ANI_ATLAS, TEXTURE_ATLAS);
         am.load(BG_MUSIC, MUSIC);
+        am.load(LARGE_FONT, BITMAP_FONT);
 
         return am;
     }
@@ -78,12 +80,15 @@ public class Assets {
         return am.get(BG_MUSIC, MUSIC);
     }
 
+    public static BitmapFont getFont64(){
+        return am.get(LARGE_FONT, BITMAP_FONT);
+    }
     public static Array<TextureAtlas.AtlasRegion> getPlayerIdleFrames(){
         return getCachedAnimationFrames(ANI_ATLAS, "Idle/idle-a");
     }
 
     public static Array<TextureAtlas.AtlasRegion> getPlayerWalkingFrames(){
-        return getCachedAnimationFrames(ANI_ATLAS, "Idle/idle-b");
+        return getCachedAnimationFrames(ANI_ATLAS, "walking/walking");
     }
     public static Array<TextureAtlas.AtlasRegion> getPlayerPickupFrames(){
         return getCachedAnimationFrames(ANI_ATLAS, "Idle/idle-b");
