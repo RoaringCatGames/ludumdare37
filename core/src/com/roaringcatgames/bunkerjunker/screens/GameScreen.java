@@ -54,6 +54,7 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
         //Initializer Systems
         BackgroundSetupSystem backgroundSetupSystem = new BackgroundSetupSystem();
         DebugGridSystem debugGridSystem = new DebugGridSystem(AppConstants.W * 5f, AppConstants.H * 5f, 2f);
+        SuppliesSetupSystem suppliesSetupSystem = new SuppliesSetupSystem();
         PlayerSetupSystem playerSetupSystem = new PlayerSetupSystem(game, AppConstants.W/2f, 4f);
         StairSensorSetupSystem stairSetupSystem = new StairSensorSetupSystem();
 
@@ -73,6 +74,7 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
         StairSystem stairSystem = new StairSystem();
         ActionIndicatorSystem actionIndicatorSystem = new ActionIndicatorSystem();
         EnvironmentBoundsSystem environmentBoundsSystem = new EnvironmentBoundsSystem();
+        PickUpSystem pickUpSystem = new PickUpSystem(this.game, AppConstants.BUNKER_LEFT, AppConstants.BUNKER_RIGHT);
 
         //Required Setup
         engine.addSystem(tweenSystem);
@@ -80,6 +82,7 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
         //Setup
         engine.addSystem(backgroundSetupSystem);
         engine.addSystem(debugGridSystem);
+        engine.addSystem(suppliesSetupSystem);
         engine.addSystem(playerSetupSystem);
         engine.addSystem(stairSetupSystem);
 
@@ -93,6 +96,7 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
         engine.addSystem(cameraPositionSystem);
         engine.addSystem(stairSystem);
         engine.addSystem(actionIndicatorSystem);
+        engine.addSystem(pickUpSystem);
 
         //Adjustment Systems
         engine.addSystem(environmentBoundsSystem);

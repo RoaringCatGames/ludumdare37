@@ -11,4 +11,6 @@ public class Controls {
     public static int[] UP_KEYS = new int[] {Input.Keys.UP, Input.Keys.W};
     public static int[] DOWN_KEYS = new int[] {Input.Keys.DOWN, Input.Keys.S};
 
+    public static int[] PICKUP_KEYS = new int[] {Input.Keys.SPACE, Input.Keys.F};
+
 }

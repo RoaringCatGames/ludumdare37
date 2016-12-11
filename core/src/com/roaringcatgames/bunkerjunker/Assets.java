@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
@@ -96,4 +97,7 @@ public class Assets {
         return result;
     }
 
+    public static TextureAtlas.AtlasRegion getTreeRegion() {
+        return getCachedRegion(SPRITE_ATLAS, "tree");
+    }
 }
