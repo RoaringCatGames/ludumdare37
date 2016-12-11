@@ -14,5 +14,7 @@ public class Z {
 
     public static final float player = 40f;
 
+    public static final float carriedSupply = 30f;
+
     public static final float foundations = 25f;
 }

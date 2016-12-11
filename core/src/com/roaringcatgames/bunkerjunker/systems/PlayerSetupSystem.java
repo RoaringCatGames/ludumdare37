@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.roaringcatgames.bunkerjunker.Animations;
+import com.roaringcatgames.bunkerjunker.Z;
 import com.roaringcatgames.bunkerjunker.components.ActionIndicatorComponent;
 import com.roaringcatgames.bunkerjunker.components.CameraComponent;
 import com.roaringcatgames.bunkerjunker.components.PlayerComponent;
@@ -38,7 +39,7 @@ public class PlayerSetupSystem extends EntitySystem {
 
         Entity player = engine.createEntity();
         player.add(TransformComponent.create(engine)
-                .setPosition(startPositionX, startPositionY));
+                .setPosition(startPositionX, startPositionY, Z.player));
         player.add(BoundsComponent.create(engine)
             .setBounds(0f, 0f, 2f, 7.5f));
         player.add(TextureComponent.create(engine));

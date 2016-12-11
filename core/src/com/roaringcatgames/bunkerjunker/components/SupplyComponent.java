@@ -12,6 +12,7 @@ public class SupplyComponent implements Component, Pool.Poolable {
 
     public ObjectMap<String, Integer> categoryWeights = new ObjectMap<>();
     public float weight = 1f;
+    public boolean isRotatedOnPickup = false;
 
     public static SupplyComponent create(Engine engine){
         return engine.createComponent(SupplyComponent.class);
@@ -27,9 +28,15 @@ public class SupplyComponent implements Component, Pool.Poolable {
         return this;
     }
 
+    public SupplyComponent setRotatedOnPickup(boolean isRotated){
+        this.isRotatedOnPickup = isRotated;
+        return this;
+    }
+
     @Override
     public void reset() {
         categoryWeights.clear();
         weight = 1f;
+        isRotatedOnPickup = false;
     }
 }
