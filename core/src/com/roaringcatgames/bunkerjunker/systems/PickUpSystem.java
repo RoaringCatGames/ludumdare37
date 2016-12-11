@@ -91,12 +91,11 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
                 sc.set("PICKUP");
                 sc.setLooping(false);
 
-                // 2. tween Supply to top of Player over life of animation
-
                 // 3. add Follower Component
-                //TODO: MOVE_TO FOLLOW IS PERFECT!!!
                 supply.add(FollowerComponent.create(getEngine())
                         .setTarget(player)
+                        .setMode(FollowMode.MOVETOSTICKY)
+                        .setFollowSpeed(20f)
                         .setOffset(0f, bc.bounds.height/2f + sbc.bounds.height/2f));
                 break;
             }
