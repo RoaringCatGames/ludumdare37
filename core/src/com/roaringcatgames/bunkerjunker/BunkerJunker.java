@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -25,6 +26,7 @@ public class BunkerJunker extends Game implements IGameProcessor {
 
 	private InputMultiplexer multiplexer;
 	private IPreferenceManager prefManager = new K2PreferenceManager("ld37_prefs");
+	private Music bgMusic;
 
 	////////////
 	//Screens
@@ -62,7 +64,7 @@ public class BunkerJunker extends Game implements IGameProcessor {
 
 	}
 
-	private float r = 181f/255f;
+	private float r = 1f; //181f/255f;
 	private float g = 216f/255f;
 	private float b = 255f/255f;
 	private float a = 255f/255f;
@@ -108,7 +110,19 @@ public class BunkerJunker extends Game implements IGameProcessor {
 
 	@Override
 	public void playBgMusic(String musicName) {
+		if(bgMusic != null){
+			bgMusic.stop();
+		}
 
+		switch(musicName){
+			case AppConstants.GAME_BG_MUSIC:
+				bgMusic = Assets.getGameBGMusic();
+				bgMusic.setLooping(false);
+				bgMusic.setVolume(1f);
+				break;
+		}
+
+		bgMusic.play();
 	}
 
 	@Override

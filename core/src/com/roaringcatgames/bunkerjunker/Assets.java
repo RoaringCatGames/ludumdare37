@@ -5,7 +5,6 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
@@ -24,7 +23,7 @@ public class Assets {
     private static final String LOADING_ATLAS = "animations/loading.atlas";
     private static final String ANI_ATLAS = "animations/animations.atlas";
     private static final String SPRITE_ATLAS = "sprites/sprites.atlas";
-
+    private static final String BG_MUSIC = "music/bunker-bg-music.mp3";
 
     public static AssetManager load(){
         am = new AssetManager();
@@ -33,6 +32,7 @@ public class Assets {
         am.load(SPRITE_ATLAS, TEXTURE_ATLAS);
         am.finishLoading();
         am.load(ANI_ATLAS, TEXTURE_ATLAS);
+        am.load(BG_MUSIC, MUSIC);
 
         return am;
     }
@@ -54,6 +54,8 @@ public class Assets {
         return spriteCache.get(name);
     }
 
+
+
     /////////////////
     //LOADING SCREEN
     /////////////////
@@ -71,8 +73,23 @@ public class Assets {
     /////////////////
     //GAME SCREEN
     /////////////////
+
+    public static Music getGameBGMusic(){
+        return am.get(BG_MUSIC, MUSIC);
+    }
+
     public static Array<TextureAtlas.AtlasRegion> getPlayerIdleFrames(){
-        return getCachedAnimationFrames(ANI_ATLAS, "player");
+        return getCachedAnimationFrames(ANI_ATLAS, "Idle/idle-a");
+    }
+
+    public static Array<TextureAtlas.AtlasRegion> getPlayerWalkingFrames(){
+        return getCachedAnimationFrames(ANI_ATLAS, "Idle/idle-b");
+    }
+    public static Array<TextureAtlas.AtlasRegion> getPlayerPickupFrames(){
+        return getCachedAnimationFrames(ANI_ATLAS, "Idle/idle-b");
+    }
+    public static Array<TextureAtlas.AtlasRegion> getPlayerThrowingFrames(){
+        return getCachedAnimationFrames(ANI_ATLAS, "Idle/idle-b");
     }
 
     public static TextureAtlas.AtlasRegion getHouseRegion(){
@@ -87,6 +104,29 @@ public class Assets {
         return getCachedRegion(SPRITE_ATLAS, "White-fence");
     }
 
+    public static TextureAtlas.AtlasRegion getBigBush(int version){
+        return getCachedRegion(SPRITE_ATLAS, "bush-" + version);
+    }
+
+    public static TextureAtlas.AtlasRegion getTimeCylce(String letter){
+        return getCachedRegion(SPRITE_ATLAS, "BG_" + letter);
+    }
+    public static TextureAtlas.AtlasRegion getDirtRegion(){
+        return getCachedRegion(SPRITE_ATLAS, "tilabledirt");
+    }
+
+    public static TextureAtlas.AtlasRegion getLayeredDirt(){
+        return getCachedRegion(SPRITE_ATLAS, "layereddirt");
+    }
+
+    public static TextureAtlas.AtlasRegion getBushesRegion(){
+        return getCachedRegion(SPRITE_ATLAS, "small-bush");
+    }
+
+    public static TextureAtlas.AtlasRegion getGrassRegion(){
+        return getCachedRegion(SPRITE_ATLAS, "grass");
+    }
+
 
 
     public static TextureAtlas.AtlasRegion getIndicatorRegion(String sensorType){
@@ -98,6 +138,15 @@ public class Assets {
                 break;
             case AppConstants.SENSOR_STAIR_UP:
                 result = getCachedRegion(SPRITE_ATLAS, "up");
+                break;
+            case AppConstants.INDICATOR_PICKUP:
+                result = getCachedRegion(SPRITE_ATLAS, "grab");
+                break;
+            case AppConstants.INDICATOR_DROP:
+                result = getCachedRegion(SPRITE_ATLAS, "drop");
+                break;
+            case AppConstants.INDICATOR_THROW:
+                result = getCachedRegion(SPRITE_ATLAS, "store");
                 break;
             default:
                 result = getCachedRegion(SPRITE_ATLAS, "tree");

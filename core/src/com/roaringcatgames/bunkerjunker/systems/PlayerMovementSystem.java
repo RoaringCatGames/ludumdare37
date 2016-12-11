@@ -10,10 +10,8 @@ import com.badlogic.gdx.InputProcessor;
 import com.roaringcatgames.bunkerjunker.AppConstants;
 import com.roaringcatgames.bunkerjunker.Controls;
 import com.roaringcatgames.bunkerjunker.Mappers;
-import com.roaringcatgames.bunkerjunker.components.IAction;
-import com.roaringcatgames.bunkerjunker.components.MovementMode;
-import com.roaringcatgames.bunkerjunker.components.PlayerComponent;
-import com.roaringcatgames.bunkerjunker.components.TriggerComponent;
+import com.roaringcatgames.bunkerjunker.components.*;
+import com.roaringcatgames.bunkerjunker.utils.PlayerStateUtil;
 import com.roaringcatgames.kitten2d.ashley.K2ComponentMappers;
 import com.roaringcatgames.kitten2d.ashley.components.StateComponent;
 import com.roaringcatgames.kitten2d.ashley.components.TransformComponent;
@@ -111,9 +109,20 @@ public class PlayerMovementSystem extends IteratingSystem implements InputProces
                 }
             }
         }
+
         VelocityComponent vc = K2ComponentMappers.velocity.get(entity);
         float prevX = vc.speed.x;
         vc.setSpeed(x, y);
+
+        if(Mappers.encumbered.has(entity)){
+            EncumberedComponent ec = Mappers.encumbered.get(entity);
+            float encumberedAdjust = AppConstants.ENCUMBERENCE_SCALE * (ec.weight/AppConstants.MAX_WEIGHT);
+            vc.speed.scl(encumberedAdjust);
+        }
+
+        if(vc.speed.x != 0f || vc.speed.y != 0f){
+            PlayerStateUtil.setStateIfDifferent(entity, "WALKING", true);
+        }
 
         TransformComponent tc = K2ComponentMappers.transform.get(entity);
         float xScaleMagnitude = Math.abs(tc.scale.x);

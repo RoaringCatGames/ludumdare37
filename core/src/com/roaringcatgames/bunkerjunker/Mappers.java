@@ -13,4 +13,5 @@ public class Mappers {
     public static final ComponentMapper<TriggerComponent> trigger = ComponentMapper.getFor(TriggerComponent.class);
     public static final ComponentMapper<SensorComponent> sensor = ComponentMapper.getFor(SensorComponent.class);
     public static final ComponentMapper<SupplyComponent> supply = ComponentMapper.getFor(SupplyComponent.class);
+    public static final ComponentMapper<EncumberedComponent> encumbered = ComponentMapper.getFor(EncumberedComponent.class);
 }

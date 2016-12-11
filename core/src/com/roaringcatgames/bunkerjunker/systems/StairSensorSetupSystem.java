@@ -20,16 +20,16 @@ public class StairSensorSetupSystem extends EntitySystem {
     public void addedToEngine(Engine engine) {
         super.addedToEngine(engine);
 
-        Vector2 aOnPos = new Vector2(-45f, 0.5f);
-        Vector2 aOffPos = new Vector2(-59f, 14.5f);
+        Vector2 aOnPos = new Vector2(-44.5f, 0.5f);
+        Vector2 aOffPos = new Vector2(-60.25f, 16.25f);
 
         Entity aOn = createSensor(engine, "A_UP", "A_DOWN", aOnPos, AppConstants.SENSOR_STAIR_UP);
         engine.addEntity(aOn);
         Entity aOff = createSensor(engine, "A_DOWN", "A_UP", aOffPos, AppConstants.SENSOR_STAIR_DOWN);
         engine.addEntity(aOff);
 
-        Vector2 bOnPos = new Vector2(-30f, 14.5f);
-        Vector2 bOffPos = new Vector2(-16f, 29.5f);
+        Vector2 bOnPos = new Vector2(-30f, 16.25f);
+        Vector2 bOffPos = new Vector2(-15.25f, 31f);
         Entity bOn = createSensor(engine, "B_UP", "B_DOWN", bOnPos, AppConstants.SENSOR_STAIR_UP);
         engine.addEntity(bOn);
         Entity bOff = createSensor(engine, "B_DOWN", "B_UP", bOffPos, AppConstants.SENSOR_STAIR_DOWN);

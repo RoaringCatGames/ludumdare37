@@ -6,4 +6,5 @@ package com.roaringcatgames.bunkerjunker;
 public class Supplies {
 
     public static final String COMFORT = "Comfort";
+    public static final String ENVIRONMENT = "Environment";
 }

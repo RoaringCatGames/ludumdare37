@@ -17,9 +17,20 @@ public class AppConstants {
     public static final float BUNKER_LEFT = 3f;
     public static final float BUNKER_RIGHT = 22f;
 
+    public static final float MIN_X_POS = -65f;
+    public static final float MAX_X_POS = 65f;
+    public static final float MAX_X_ELEVATED = -13f;
+
+    public static final float ENCUMBERENCE_SCALE = 0.9f;
+    public static final float MAX_WEIGHT = 200f;
+
     public static final String SENSOR_STAIR_UP = "STAIR_UP";
     public static final String SENSOR_STAIR_DOWN = "STAIR_DOWN";
+    public static final String INDICATOR_PICKUP = "PICKUP";
+    public static final String INDICATOR_THROW = "THROW";
+    public static final String INDICATOR_DROP = "DROP";
 
+    public static final String GAME_BG_MUSIC = "GAME";
 
     public static void setAppWH(float w, float h){
         W = w;

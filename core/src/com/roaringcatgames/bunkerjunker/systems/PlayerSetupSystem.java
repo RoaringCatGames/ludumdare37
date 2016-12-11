@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.roaringcatgames.bunkerjunker.Animations;
+import com.roaringcatgames.bunkerjunker.BunkerJunkerTweenAccessor;
 import com.roaringcatgames.bunkerjunker.Z;
 import com.roaringcatgames.bunkerjunker.components.ActionIndicatorComponent;
 import com.roaringcatgames.bunkerjunker.components.CameraComponent;
@@ -46,7 +47,10 @@ public class PlayerSetupSystem extends EntitySystem {
         player.add(PlayerComponent.create(engine));
         player.add(VelocityComponent.create(engine));
         player.add(AnimationComponent.create(engine)
-                .addAnimation("DEFAULT", Animations.getPlayerIdle()));
+                .addAnimation("DEFAULT", Animations.getPlayerIdle())
+                .addAnimation("WALKING", Animations.getPlayerWalking())
+                .addAnimation("PICKUP", Animations.getPlayerPickup())
+                .addAnimation("THROWING", Animations.getPlayerThrow()));
         player.add(StateComponent.create(engine)
                 .set("DEFAULT")
                 .setLooping(true));
@@ -89,7 +93,11 @@ public class PlayerSetupSystem extends EntitySystem {
         camera.add(FollowerComponent.create(engine)
             .setTarget(player)
             .setOffset(0f, 6f)
-            .setMode(FollowMode.STICKY));
+            .setFollowSpeed(14.5f)
+            .setMode(FollowMode.MOVETO));
+        camera.add(TweenComponent.create(engine)
+            .addTween(Tween.to(camera, BunkerJunkerTweenAccessor.CAMERA_ZOOM, 1f)
+                .target(1.5f)));
         engine.addEntity(camera);
     }
 
