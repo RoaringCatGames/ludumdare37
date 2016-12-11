@@ -10,9 +10,7 @@ import com.roaringcatgames.bunkerjunker.AppConstants;
 import com.roaringcatgames.bunkerjunker.Assets;
 import com.roaringcatgames.bunkerjunker.Z;
 import com.roaringcatgames.bunkerjunker.utils.Box2DUtil;
-import com.roaringcatgames.kitten2d.ashley.components.BodyComponent;
-import com.roaringcatgames.kitten2d.ashley.components.TextureComponent;
-import com.roaringcatgames.kitten2d.ashley.components.TransformComponent;
+import com.roaringcatgames.kitten2d.ashley.components.*;
 
 /**
  * Builds all of the Background Sprites and entities
@@ -45,6 +43,7 @@ public class BackgroundSetupSystem extends EntitySystem {
         engine.addEntity(bunker);
 
 
+        buildSunMoonCycle(engine);
         buildLargeTrees(engine);
         buildBushes(engine);
         buildDirt(engine);
@@ -170,7 +169,7 @@ public class BackgroundSetupSystem extends EntitySystem {
         float tileMaxX = AppConstants.MAX_X_POS*4f;
         float tileSizeX = 44f;
         float halfTile = 20f;
-        float buffer = tileSizeX*0.75f;
+        float buffer = tileSizeX;
 
         int width = MathUtils.ceil((tileMaxX - tileMinX)/buffer);
 //
@@ -208,6 +207,41 @@ public class BackgroundSetupSystem extends EntitySystem {
                     .setPosition(x, y, Z.bushes));
             engine.addEntity(bushes);
         }
+    }
+
+
+    private Entity attachItem(Engine engine, Entity target, TextureRegion tr, float scale, float xOff, float yOff, float z){
+        Entity tl = engine.createEntity();
+        tl.add(TransformComponent.create(engine)
+                .setScale(scale, scale)
+                .setPosition(0f, 0f, z));
+        tl.add(FollowerComponent.create(engine)
+                .setTarget(target)
+                .setOffset(xOff * scale, yOff*scale));
+        tl.add(TextureComponent.create(engine)
+                .setRegion(tr));
+        return tl;
+    }
+
+    private void buildSunMoonCycle(Engine engine){
+        Entity cycle = engine.createEntity();
+        cycle.add(TransformComponent.create(engine)
+            .setPosition(0f, 0f, Z.timeCycle));
+        cycle.add(RotationComponent.create(engine)
+            .setRotationSpeed(-2f));
+        engine.addEntity(cycle);
+
+        float scale = 3f;
+        float halfWidth = 31.95f;
+        Entity topLeft = attachItem(engine, cycle, Assets.getTimeCylce("A"), scale, -halfWidth, halfWidth, Z.timeCycle);
+        Entity topRight = attachItem(engine, cycle, Assets.getTimeCylce("B"), scale, halfWidth, halfWidth, Z.timeCycle);
+        Entity bottomLeft = attachItem(engine, cycle, Assets.getTimeCylce("D"), scale, -halfWidth, -halfWidth, Z.timeCycle);
+        Entity bottomRight = attachItem(engine, cycle, Assets.getTimeCylce("C"), scale, halfWidth, -halfWidth, Z.timeCycle);
+
+        engine.addEntity(topLeft);
+        engine.addEntity(topRight);
+        engine.addEntity(bottomLeft);
+        engine.addEntity(bottomRight);
     }
 
 

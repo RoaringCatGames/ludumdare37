@@ -98,6 +98,10 @@ public class Assets {
     public static TextureAtlas.AtlasRegion getBigBush(int version){
         return getCachedRegion(SPRITE_ATLAS, "bush-" + version);
     }
+
+    public static TextureAtlas.AtlasRegion getTimeCylce(String letter){
+        return getCachedRegion(SPRITE_ATLAS, "BG_" + letter);
+    }
     public static TextureAtlas.AtlasRegion getDirtRegion(){
         return getCachedRegion(SPRITE_ATLAS, "tilabledirt");
     }

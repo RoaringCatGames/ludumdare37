@@ -5,6 +5,7 @@ package com.roaringcatgames.bunkerjunker;
  */
 public class Z {
 
+    public static final float timeCycle = 110f;
     public static final float treeline = 100f;
     public static final float altTreeline = 99f;
     public static final float bushes = 90f;
