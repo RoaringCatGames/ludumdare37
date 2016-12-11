@@ -92,7 +92,7 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
                 .setRegion(Assets.getIndicatorRegion(AppConstants.INDICATOR_PICKUP)));
             pickupIndictor.add(FollowerComponent.create(getEngine())
                 .setTarget(player)
-                .setOffset(0f, 5f)
+                .setOffset(3f, 0f)
                 .setMode(FollowMode.STICKY));
             getEngine().addEntity(pickupIndictor);
         }
@@ -180,6 +180,8 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
             SupplyComponent sc = Mappers.supply.get(supply);
             player.add(EncumberedComponent.create(getEngine())
                     .setWeight(sc.weight));
+
+            Assets.getPickupGruntSfx().play(1f);
         }
     }
 
@@ -226,6 +228,8 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
                         .target(5f).repeatYoyo(1, 0.5f)));
 
             }
+
+            Assets.getThrowGruntSfx().play(1f);
         }
 
         //4. Remove Encumberence from Player

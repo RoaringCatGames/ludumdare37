@@ -15,7 +15,7 @@ public class Animations {
         playerIdle = new Animation(1f/16f, Assets.getPlayerIdleFrames(), Animation.PlayMode.LOOP);
         playerWalking = new Animation(1f/16f, Assets.getPlayerWalkingFrames(), Animation.PlayMode.LOOP);
         playerPickup = new Animation(1f/7f, Assets.getPlayerPickupFrames(), Animation.PlayMode.NORMAL);
-        playerThrow = new Animation(1f/14f, Assets.getPlayerThrowingFrames(), Animation.PlayMode.NORMAL);
+        playerThrow = new Animation(1f/4f, Assets.getPlayerThrowingFrames(), Animation.PlayMode.NORMAL);
 
     }
 

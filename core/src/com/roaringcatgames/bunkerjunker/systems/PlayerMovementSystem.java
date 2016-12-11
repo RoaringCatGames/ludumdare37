@@ -7,7 +7,9 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Sound;
 import com.roaringcatgames.bunkerjunker.AppConstants;
+import com.roaringcatgames.bunkerjunker.Assets;
 import com.roaringcatgames.bunkerjunker.Controls;
 import com.roaringcatgames.bunkerjunker.Mappers;
 import com.roaringcatgames.bunkerjunker.components.*;
@@ -35,6 +37,9 @@ public class PlayerMovementSystem extends IteratingSystem implements InputProces
     private float VELOCITY_X = 15f;
     private float VELOCITY_Y = 15f;
 
+    private Sound stairSound;
+    private boolean isPlaying = false;
+
     public PlayerMovementSystem(IGameProcessor game){
         super(Family.all(
                 PlayerComponent.class,
@@ -43,6 +48,7 @@ public class PlayerMovementSystem extends IteratingSystem implements InputProces
                 VelocityComponent.class).get());
 
         this.game = game;
+        this.stairSound = Assets.getStairsSfx();
     }
 
     @Override
@@ -117,11 +123,21 @@ public class PlayerMovementSystem extends IteratingSystem implements InputProces
         if(Mappers.encumbered.has(entity)){
             EncumberedComponent ec = Mappers.encumbered.get(entity);
             float encumberedAdjust = AppConstants.ENCUMBERENCE_SCALE * (ec.weight/AppConstants.MAX_WEIGHT);
-            vc.speed.scl(encumberedAdjust);
+            vc.speed.scl(1f - encumberedAdjust);
         }
 
         if(vc.speed.x != 0f || vc.speed.y != 0f){
             PlayerStateUtil.setStateIfDifferent(entity, "WALKING", true);
+        }
+
+        if(y != 0f && !isPlaying){
+            Gdx.app.log("PLAYING STAIR SOUND", "SOUND");
+            stairSound.loop(1f);
+            isPlaying = true;
+        }else if(isPlaying && y == 0f){
+            Gdx.app.log("STOPPING STAIR SOUND", "SOUND");
+            stairSound.stop();
+            isPlaying = false;
         }
 
         TransformComponent tc = K2ComponentMappers.transform.get(entity);

@@ -9,14 +9,16 @@ import com.roaringcatgames.bunkerjunker.AppConstants;
 import com.roaringcatgames.bunkerjunker.Assets;
 import com.roaringcatgames.kitten2d.ashley.K2ComponentMappers;
 import com.roaringcatgames.kitten2d.ashley.components.TextComponent;
+import com.roaringcatgames.kitten2d.ashley.components.TextureComponent;
 import com.roaringcatgames.kitten2d.ashley.components.TransformComponent;
 
 /**
- * Created by barry on 12/11/16.
+ *
  */
 public class TimerSystem extends IntervalSystem {
 
     private Entity timer;
+    private Entity backTimer;
     private float totalTime = 60f*3f;
 
     float elapsedTime = 0f;
@@ -30,13 +32,29 @@ public class TimerSystem extends IntervalSystem {
     public void addedToEngine(Engine engine) {
         super.addedToEngine(engine);
 
+        backTimer = engine.createEntity();
+        backTimer.add(TransformComponent.create(engine)
+                .setPosition(AppConstants.W/2f-0.05f, AppConstants.H-0.05f)
+                .setTint(Color.BLACK));
+//        timer.add(TextureComponent.create(engine)
+//            .setRegion(Assets.getTimeOvalRegion()));
+        backTimer.add(TextComponent.create(engine)
+                .setFont(Assets.getFont64())
+                .setText(getTime()));
+        engine.addEntity(backTimer);
+
+
         timer = engine.createEntity();
         timer.add(TransformComponent.create(engine)
             .setPosition(AppConstants.W/2f, AppConstants.H)
             .setTint(Color.PINK));
+//        timer.add(TextureComponent.create(engine)
+//            .setRegion(Assets.getTimeOvalRegion()));
         timer.add(TextComponent.create(engine)
             .setFont(Assets.getFont64())
             .setText(getTime()));
+
+
 
         engine.addEntity(timer);
     }
@@ -46,6 +64,10 @@ public class TimerSystem extends IntervalSystem {
         elapsedTime += getInterval();
         if(timer !=null) {
             TextComponent tc = K2ComponentMappers.text.get(timer);
+            tc.setText(getTime());
+        }
+        if(backTimer !=null) {
+            TextComponent tc = K2ComponentMappers.text.get(backTimer);
             tc.setText(getTime());
         }
     }
