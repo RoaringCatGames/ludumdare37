@@ -67,6 +67,7 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
         MovementSystem movementSystem = new MovementSystem();
         BoundsSystem boundsSystem = new BoundsSystem();
         FollowerSystem followerSystem = new FollowerSystem(Family.all(PlayerComponent.class).get());
+        RotationSystem rotationSystem = new RotationSystem();
         TweenSystem tweenSystem = new TweenSystem();
 
         PlayerMovementSystem playerMovementSystem = new PlayerMovementSystem(game);
@@ -89,6 +90,7 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
         //Work
         engine.addSystem(physicsSystem);
         engine.addSystem(animationSystem);
+        engine.addSystem(rotationSystem);
         engine.addSystem(movementSystem);
         engine.addSystem(followerSystem);
         engine.addSystem(playerMovementSystem);

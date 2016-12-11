@@ -5,11 +5,13 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.utils.Array;
 import com.roaringcatgames.bunkerjunker.AppConstants;
 import com.roaringcatgames.bunkerjunker.Controls;
 import com.roaringcatgames.bunkerjunker.Mappers;
+import com.roaringcatgames.bunkerjunker.Z;
 import com.roaringcatgames.bunkerjunker.components.PlayerComponent;
 import com.roaringcatgames.bunkerjunker.components.SupplyComponent;
 import com.roaringcatgames.kitten2d.ashley.K2ComponentMappers;
@@ -72,8 +74,11 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
         //Do Work
         if(isPickupPressed){
             if(currentSupply != null){
+                Gdx.app.log("Pickup System", "Dropping Supply");
                 dropCurrentSupply();
+                currentSupply = null;
             }else{
+                Gdx.app.log("Pickup System", "PICKING UP Supply");
                 pickupNearSupply();
             }
             isPickupPressed = false;
@@ -91,12 +96,27 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
                 sc.set("PICKUP");
                 sc.setLooping(false);
 
+                //2. Rotate supply if flagged to do so
+                if(Mappers.supply.get(supply).isRotatedOnPickup) {
+                    supply.add(RotationComponent.create(getEngine())
+                            .setHasTargetRotation(true)
+                            .setTargetRotation(90f)
+                            .setRotationSpeed(180f));
+
+                }
                 // 3. add Follower Component
                 supply.add(FollowerComponent.create(getEngine())
                         .setTarget(player)
+                        .setMatchParentRotation(false)
                         .setMode(FollowMode.MOVETOSTICKY)
                         .setFollowSpeed(20f)
                         .setOffset(0f, bc.bounds.height/2f + sbc.bounds.height/2f));
+
+                //4. Bring forward
+                supply.add(TweenComponent.create(getEngine())
+                    .addTween(Tween.to(supply, K2EntityTweenAccessor.POSITION_Z, 0.5f)
+                        .target(Z.carriedSupply)));
+
                 break;
             }
         }
@@ -119,18 +139,20 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
             BoundsComponent bc = K2ComponentMappers.bounds.get(currentSupply);
             float targetY = bottomY + bc.bounds.height/2f;
 
-            Tween toGround = Tween.from(currentSupply, K2EntityTweenAccessor.POSITION_Y, 0.25f)
-                    .target(targetY);
+            Gdx.app.log("PickupSystem", "Target Y for Drop: " + targetY + " BottomY: " + bottomY);
+
             currentSupply.add(TweenComponent.create(getEngine())
-                .addTween(toGround));
+                .addTween(Tween.to(currentSupply, K2EntityTweenAccessor.POSITION, 0.25f)
+                        .target(tc.position.x, targetY, Z.supply)));
         }else{
             //TODO: Add Body Component and let it FALL
+            Gdx.app.log("PickupSystem", "Is On Bunker Target");
         }
     }
 
     private float getMinYFromCurrentPosition(float y){
         if(y < AppConstants.FIRST_FLOOR_Y){
-            y = 1f;
+            y = 0f;
         }else if(y < AppConstants.SECOND_FLOOR_Y){
             y = AppConstants.FIRST_FLOOR_Y;
         }else {
@@ -141,7 +163,7 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
     }
 
     private boolean isOnBunkerTarget(float x){
-        return x >= bunkerLeft || x <= bunkerRight;
+        return (x >= bunkerLeft && x <= bunkerRight);
     }
 
     private void setPickupPressed(int keycode, boolean isPressed){

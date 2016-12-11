@@ -21,7 +21,7 @@ allprojects {
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.3'
         aiVersion = '1.7.0'
-        ashleyExtensionsVersion = '0.4.2-SNAPSHOT'
+        ashleyExtensionsVersion = '0.4.3-SNAPSHOT'
         tweenEngineVersion = '6.3.4'
         outputName = 'bunker-junker'
     }
