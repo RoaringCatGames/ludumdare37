@@ -7,6 +7,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.roaringcatgames.bunkerjunker.AppConstants;
 import com.roaringcatgames.bunkerjunker.Controls;
@@ -14,6 +15,7 @@ import com.roaringcatgames.bunkerjunker.Mappers;
 import com.roaringcatgames.bunkerjunker.Z;
 import com.roaringcatgames.bunkerjunker.components.PlayerComponent;
 import com.roaringcatgames.bunkerjunker.components.SupplyComponent;
+import com.roaringcatgames.bunkerjunker.utils.Box2DUtil;
 import com.roaringcatgames.kitten2d.ashley.K2ComponentMappers;
 import com.roaringcatgames.kitten2d.ashley.K2EntityTweenAccessor;
 import com.roaringcatgames.kitten2d.ashley.components.*;
@@ -27,6 +29,7 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
     private float bunkerLeft, bunkerRight;
 
     private IGameProcessor game;
+    private World world;
 
     private Entity player;
     private Entity currentSupply;
@@ -34,9 +37,10 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
 
     private boolean isPickupPressed = false;
 
-    public PickUpSystem(IGameProcessor game, float bunkerLeft, float bunkerRight){
+    public PickUpSystem(IGameProcessor game, World world, float bunkerLeft, float bunkerRight){
         super(Family.one(PlayerComponent.class, SupplyComponent.class).get());
         this.game = game;
+        this.world = world;
         this.bunkerLeft = bunkerLeft;
         this.bunkerRight = bunkerRight;
     }
@@ -147,6 +151,17 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
         }else{
             //TODO: Add Body Component and let it FALL
             Gdx.app.log("PickupSystem", "Is On Bunker Target");
+            BoundsComponent bc = K2ComponentMappers.bounds.get(currentSupply);
+            SupplyComponent spc = Mappers.supply.get(currentSupply);
+            BodyComponent bdyc = BodyComponent.create(getEngine())
+                    .setBody(Box2DUtil.buildBoxBody(world, false, tc.position.x, tc.position.y,
+                                                    bc.bounds.width, bc.bounds.height, tc.rotation, spc.weight, 0.5f, 0.5f));
+            currentSupply.add(bdyc);
+
+            //TRACK the Stats!!
+            for(String key:spc.categoryWeights.keys()){
+                AppConstants.addStat(key, spc.categoryWeights.get(key));
+            }
         }
     }
 

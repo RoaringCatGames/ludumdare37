@@ -27,7 +27,7 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
     private Vector2 gravity = new Vector2(0f, -9.8f);
 
     private final float ZOOM_SPEED = 0.05f;
-    private final float MAX_ZOOM = 1.8f;
+    private final float MAX_ZOOM = 8.8f;
     private final float MIN_ZOOM = 0.75f;
 
     public GameScreen(IGameProcessor game) {
@@ -52,7 +52,7 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
         this.engine = new PooledEngine();
 
         //Initializer Systems
-        BackgroundSetupSystem backgroundSetupSystem = new BackgroundSetupSystem();
+        BackgroundSetupSystem backgroundSetupSystem = new BackgroundSetupSystem(world);
         DebugGridSystem debugGridSystem = new DebugGridSystem(AppConstants.W * 5f, AppConstants.H * 5f, 2f);
         SuppliesSetupSystem suppliesSetupSystem = new SuppliesSetupSystem();
         PlayerSetupSystem playerSetupSystem = new PlayerSetupSystem(game, AppConstants.W/2f, 4f);
@@ -75,7 +75,7 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
         StairSystem stairSystem = new StairSystem();
         ActionIndicatorSystem actionIndicatorSystem = new ActionIndicatorSystem();
         EnvironmentBoundsSystem environmentBoundsSystem = new EnvironmentBoundsSystem();
-        PickUpSystem pickUpSystem = new PickUpSystem(this.game, AppConstants.BUNKER_LEFT, AppConstants.BUNKER_RIGHT);
+        PickUpSystem pickUpSystem = new PickUpSystem(this.game, world, AppConstants.BUNKER_LEFT, AppConstants.BUNKER_RIGHT);
 
         //Required Setup
         engine.addSystem(tweenSystem);
@@ -140,6 +140,9 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        Vector2 v = new Vector2(screenX, screenY);
+        game.getViewport().unproject(v);
+        Gdx.app.log("GAME SCREEN", "Touched Point X: " + v.x + " Y: " + v.y);
         return false;
     }
 

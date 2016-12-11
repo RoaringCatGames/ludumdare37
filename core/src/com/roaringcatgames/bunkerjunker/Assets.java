@@ -76,8 +76,18 @@ public class Assets {
     }
 
     public static TextureAtlas.AtlasRegion getHouseRegion(){
-        return getCachedRegion(SPRITE_ATLAS, "house");
+        return getCachedRegion(SPRITE_ATLAS, "House");
     }
+
+    public static TextureAtlas.AtlasRegion getBunkerRegion(){
+        return getCachedRegion(SPRITE_ATLAS, "bunker");
+    }
+
+    public static TextureAtlas.AtlasRegion getFenceRegion(){
+        return getCachedRegion(SPRITE_ATLAS, "White-fence");
+    }
+
+
 
     public static TextureAtlas.AtlasRegion getIndicatorRegion(String sensorType){
 
