@@ -58,8 +58,8 @@ public class BackgroundSetupSystem extends EntitySystem {
 
         //Entity
         //Entity leftTop = buildBasicBox(engine, AppConstants.BUNKER_LEFT, -5f, 1f, 10f);
-        Entity ballToTest = buildBallEntity(engine, x, 0f, 2f, 5f, 0.5f, 0.2f);
-        engine.addEntity(ballToTest);
+//        Entity ballToTest = buildBallEntity(engine, x, 0f, 2f, 5f, 0.5f, 0.2f);
+//        engine.addEntity(ballToTest);
         Entity chainOutline = buildChainOutline(engine, bunkerXVals, bunkerYVals, 1f, 0.5f, 0.3f);
         engine.addEntity(chainOutline);
     }

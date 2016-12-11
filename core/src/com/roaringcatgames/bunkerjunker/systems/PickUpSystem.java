@@ -92,7 +92,7 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
                 .setRegion(Assets.getIndicatorRegion(AppConstants.INDICATOR_PICKUP)));
             pickupIndictor.add(FollowerComponent.create(getEngine())
                 .setTarget(player)
-                .setOffset(0f, 5f)
+                .setOffset(3f, 0f)
                 .setMode(FollowMode.STICKY));
             getEngine().addEntity(pickupIndictor);
         }

@@ -117,7 +117,7 @@ public class PlayerMovementSystem extends IteratingSystem implements InputProces
         if(Mappers.encumbered.has(entity)){
             EncumberedComponent ec = Mappers.encumbered.get(entity);
             float encumberedAdjust = AppConstants.ENCUMBERENCE_SCALE * (ec.weight/AppConstants.MAX_WEIGHT);
-            vc.speed.scl(encumberedAdjust);
+            vc.speed.scl(1f - encumberedAdjust);
         }
 
         if(vc.speed.x != 0f || vc.speed.y != 0f){

@@ -91,10 +91,10 @@ public class Assets {
         return getCachedAnimationFrames(ANI_ATLAS, "walking/walking");
     }
     public static Array<TextureAtlas.AtlasRegion> getPlayerPickupFrames(){
-        return getCachedAnimationFrames(ANI_ATLAS, "Idle/idle-b");
+        return getCachedAnimationFrames(ANI_ATLAS, "throw/throw");
     }
     public static Array<TextureAtlas.AtlasRegion> getPlayerThrowingFrames(){
-        return getCachedAnimationFrames(ANI_ATLAS, "Idle/idle-b");
+        return getCachedAnimationFrames(ANI_ATLAS, "throw/throw");
     }
 
     public static TextureAtlas.AtlasRegion getHouseRegion(){
@@ -131,8 +131,6 @@ public class Assets {
     public static TextureAtlas.AtlasRegion getGrassRegion(){
         return getCachedRegion(SPRITE_ATLAS, "grass");
     }
-
-
 
     public static TextureAtlas.AtlasRegion getIndicatorRegion(String sensorType){
 
