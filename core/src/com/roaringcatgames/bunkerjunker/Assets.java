@@ -164,4 +164,22 @@ public class Assets {
     public static TextureAtlas.AtlasRegion getTreeRegion() {
         return getCachedRegion(SPRITE_ATLAS, "tree");
     }
+
+
+    /////////////////
+    // Supplies
+    /////////////////
+
+    public static TextureAtlas.AtlasRegion getWaterRegion(){
+        return getCachedRegion(SPRITE_ATLAS, "supplies/water");
+    }
+    public static TextureAtlas.AtlasRegion getDogfoodRegion(){
+        return getCachedRegion(SPRITE_ATLAS, "supplies/dogfood");
+    }
+    public static TextureAtlas.AtlasRegion getCarRegion(){
+        return getCachedRegion(SPRITE_ATLAS, "supplies/car");
+    }
+    public static TextureAtlas.AtlasRegion getTVRegion(){
+        return getCachedRegion(SPRITE_ATLAS, "supplies/region");
+    }
 }
