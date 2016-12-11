@@ -4,9 +4,16 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.Input;
+import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.roaringcatgames.bunkerjunker.AppConstants;
+import com.roaringcatgames.bunkerjunker.Controls;
+import com.roaringcatgames.bunkerjunker.Mappers;
+import com.roaringcatgames.bunkerjunker.components.IAction;
+import com.roaringcatgames.bunkerjunker.components.MovementMode;
 import com.roaringcatgames.bunkerjunker.components.PlayerComponent;
+import com.roaringcatgames.bunkerjunker.components.TriggerComponent;
 import com.roaringcatgames.kitten2d.ashley.K2ComponentMappers;
 import com.roaringcatgames.kitten2d.ashley.components.StateComponent;
 import com.roaringcatgames.kitten2d.ashley.components.TransformComponent;
@@ -18,11 +25,6 @@ import com.roaringcatgames.kitten2d.gdx.helpers.IGameProcessor;
  */
 public class PlayerMovementSystem extends IteratingSystem implements InputProcessor{
 
-    private int[] LEFT_KEYS = new int[] {Input.Keys.LEFT, Input.Keys.A};
-    private int[] RIGHT_KEYS = new int[] {Input.Keys.RIGHT, Input.Keys.D};
-    private int[] UP_KEYS = new int[] {Input.Keys.UP, Input.Keys.W};
-    private int[] DOWN_KEYS = new int[] {Input.Keys.DOWN, Input.Keys.S};
-
     private IGameProcessor game;
 
     private boolean isLeftPressed = false;
@@ -30,8 +32,10 @@ public class PlayerMovementSystem extends IteratingSystem implements InputProces
     private boolean isUpPressed = false;
     private boolean isDownPressed = false;
 
-    private float VELOCITY_X = 10f;
-    private float VELOCITY_Y = 8f;
+    private IAction playerStairToggle;
+
+    private float VELOCITY_X = 15f;
+    private float VELOCITY_Y = 15f;
 
     public PlayerMovementSystem(IGameProcessor game){
         super(Family.all(
@@ -58,18 +62,58 @@ public class PlayerMovementSystem extends IteratingSystem implements InputProces
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
 
+        PlayerComponent pc = Mappers.player.get(entity);
+        if(this.playerStairToggle == null){
+            this.playerStairToggle = new PlayerOffStepsAction(pc);
+        }
+
         float x = 0f;
+        float y = 0f;
+
+        if(isUpPressed || isDownPressed){
+            ImmutableArray<Entity> triggers = getEngine().getEntitiesFor(Family.all(TriggerComponent.class).get());
+            for(Entity t:triggers){
+                TriggerComponent ttc = Mappers.trigger.get(t);
+                boolean couldBeGoingUp = isUpPressed && AppConstants.SENSOR_STAIR_UP.equals(ttc.sensorType);
+                boolean couldBeGoingDown = isDownPressed && AppConstants.SENSOR_STAIR_DOWN.equals(ttc.sensorType);
+
+                if((couldBeGoingUp || couldBeGoingDown) && ttc.canBeTriggered && !ttc.isTriggered) {
+                    Gdx.app.log("PlayerMovementSystem", "Trigger Triggered!!! ON: " + ttc.onSensorKey + " OFF: " + ttc.offSensorKey);
+                    ttc.canBeTriggered = false;
+                    ttc.isTriggered = true;
+                    pc.moveMode = ttc.onSensorKey.contains("A") ? MovementMode.STAIRS_RL : MovementMode.STAIRS_LR;
+                    ttc.endedAction = playerStairToggle;
+                }
+            }
+        }
+
         if(isMoving()) {
             if (isLeftPressed) {
                 x = -VELOCITY_X;
+                if(pc.moveMode != MovementMode.LEFT_RIGHT){
+                    y = pc.moveMode == MovementMode.STAIRS_RL ? VELOCITY_Y : -VELOCITY_Y;
+                }
             }
             if (isRightPressed) {
                 x = VELOCITY_X;
+                if(pc.moveMode != MovementMode.LEFT_RIGHT){
+                    y = pc.moveMode == MovementMode.STAIRS_RL ? -VELOCITY_Y : VELOCITY_Y;
+                }
+            }
+
+            if(pc.moveMode != MovementMode.LEFT_RIGHT) {
+                if (isUpPressed) {
+                    x = pc.moveMode == MovementMode.STAIRS_RL ? -VELOCITY_X : VELOCITY_X;
+                    y = VELOCITY_Y;
+                } else if (isDownPressed) {
+                    x = pc.moveMode == MovementMode.STAIRS_RL  ? VELOCITY_X : -VELOCITY_X;
+                    y = -VELOCITY_Y;
+                }
             }
         }
         VelocityComponent vc = K2ComponentMappers.velocity.get(entity);
         float prevX = vc.speed.x;
-        vc.setSpeed(x, vc.speed.y);
+        vc.setSpeed(x, y);
 
         TransformComponent tc = K2ComponentMappers.transform.get(entity);
         float xScaleMagnitude = Math.abs(tc.scale.x);
@@ -88,24 +132,14 @@ public class PlayerMovementSystem extends IteratingSystem implements InputProces
         return isLeftPressed || isRightPressed || isUpPressed || isDownPressed;
     }
 
-
-    private boolean inArray(int[] target, int value){
-        for(int item:target){
-            if(item == value){
-                return true;
-            }
-        }
-        return false;
-    }
-
     private void toggleKeyDown(int keycode, boolean isPressed){
-        if(inArray(LEFT_KEYS, keycode)){
+        if(AppConstants.inArray(Controls.LEFT_KEYS, keycode)){
             isLeftPressed = isPressed;
-        }else if(inArray(RIGHT_KEYS, keycode)){
+        }else if(AppConstants.inArray(Controls.RIGHT_KEYS, keycode)){
             isRightPressed = isPressed;
-        }else if(inArray(UP_KEYS, keycode)){
+        }else if(AppConstants.inArray(Controls.UP_KEYS, keycode)){
             isUpPressed = isPressed;
-        }else if(inArray(DOWN_KEYS, keycode)){
+        }else if(AppConstants.inArray(Controls.DOWN_KEYS, keycode)){
             isDownPressed = isPressed;
         }
     }

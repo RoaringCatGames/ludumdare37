@@ -9,12 +9,19 @@ import com.badlogic.gdx.utils.Pool;
  */
 public class PlayerComponent implements Component, Pool.Poolable{
 
+    public MovementMode moveMode = MovementMode.LEFT_RIGHT;
+
     public static PlayerComponent create(Engine engine){
         return engine.createComponent(PlayerComponent.class);
     }
 
+    public PlayerComponent setOnStairs(MovementMode mode){
+        this.moveMode = mode;
+        return this;
+    }
+
     @Override
     public void reset() {
-
+        moveMode = MovementMode.LEFT_RIGHT;
     }
 }

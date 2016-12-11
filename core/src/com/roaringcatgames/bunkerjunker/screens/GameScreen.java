@@ -1,5 +1,6 @@
 package com.roaringcatgames.bunkerjunker.screens;
 
+import aurelienribon.tweenengine.equations.Back;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.core.PooledEngine;
@@ -8,12 +9,10 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.roaringcatgames.bunkerjunker.AppConstants;
 import com.roaringcatgames.bunkerjunker.components.PlayerComponent;
-import com.roaringcatgames.bunkerjunker.systems.CameraPositionSystem;
-import com.roaringcatgames.bunkerjunker.systems.DebugGridSystem;
-import com.roaringcatgames.bunkerjunker.systems.PlayerMovementSystem;
-import com.roaringcatgames.bunkerjunker.systems.PlayerSetupSystem;
+import com.roaringcatgames.bunkerjunker.systems.*;
 import com.roaringcatgames.kitten2d.ashley.systems.*;
 import com.roaringcatgames.kitten2d.gdx.helpers.IGameProcessor;
 import com.roaringcatgames.kitten2d.gdx.screens.LazyInitScreen;
@@ -53,8 +52,11 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
         this.engine = new PooledEngine();
 
         //Initializer Systems
+        BackgroundSetupSystem backgroundSetupSystem = new BackgroundSetupSystem();
         DebugGridSystem debugGridSystem = new DebugGridSystem(AppConstants.W * 5f, AppConstants.H * 5f, 2f);
+        SuppliesSetupSystem suppliesSetupSystem = new SuppliesSetupSystem();
         PlayerSetupSystem playerSetupSystem = new PlayerSetupSystem(game, AppConstants.W/2f, 4f);
+        StairSensorSetupSystem stairSetupSystem = new StairSensorSetupSystem();
 
         RenderingSystem renderingSystem = new RenderingSystem(game.getBatch(), game.getCamera(), AppConstants.PPM);
         DebugSystem debugRenderingSystem = new DebugSystem(game.getCamera());
@@ -65,13 +67,24 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
         MovementSystem movementSystem = new MovementSystem();
         BoundsSystem boundsSystem = new BoundsSystem();
         FollowerSystem followerSystem = new FollowerSystem(Family.all(PlayerComponent.class).get());
+        TweenSystem tweenSystem = new TweenSystem();
 
         PlayerMovementSystem playerMovementSystem = new PlayerMovementSystem(game);
         CameraPositionSystem cameraPositionSystem = new CameraPositionSystem();
+        StairSystem stairSystem = new StairSystem();
+        ActionIndicatorSystem actionIndicatorSystem = new ActionIndicatorSystem();
+        EnvironmentBoundsSystem environmentBoundsSystem = new EnvironmentBoundsSystem();
+        PickUpSystem pickUpSystem = new PickUpSystem(this.game, AppConstants.BUNKER_LEFT, AppConstants.BUNKER_RIGHT);
+
+        //Required Setup
+        engine.addSystem(tweenSystem);
 
         //Setup
+        engine.addSystem(backgroundSetupSystem);
         engine.addSystem(debugGridSystem);
+        engine.addSystem(suppliesSetupSystem);
         engine.addSystem(playerSetupSystem);
+        engine.addSystem(stairSetupSystem);
 
         //Work
         engine.addSystem(physicsSystem);
@@ -81,6 +94,12 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
         engine.addSystem(playerMovementSystem);
         engine.addSystem(boundsSystem);
         engine.addSystem(cameraPositionSystem);
+        engine.addSystem(stairSystem);
+        engine.addSystem(actionIndicatorSystem);
+        engine.addSystem(pickUpSystem);
+
+        //Adjustment Systems
+        engine.addSystem(environmentBoundsSystem);
 
         //Rendering
         engine.addSystem(renderingSystem);
