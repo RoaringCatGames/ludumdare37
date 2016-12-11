@@ -5,7 +5,6 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
@@ -80,7 +79,17 @@ public class Assets {
     }
 
     public static Array<TextureAtlas.AtlasRegion> getPlayerIdleFrames(){
-        return getCachedAnimationFrames(ANI_ATLAS, "player");
+        return getCachedAnimationFrames(ANI_ATLAS, "Idle/idle-a");
+    }
+
+    public static Array<TextureAtlas.AtlasRegion> getPlayerWalkingFrames(){
+        return getCachedAnimationFrames(ANI_ATLAS, "Idle/idle-b");
+    }
+    public static Array<TextureAtlas.AtlasRegion> getPlayerPickupFrames(){
+        return getCachedAnimationFrames(ANI_ATLAS, "Idle/idle-b");
+    }
+    public static Array<TextureAtlas.AtlasRegion> getPlayerThrowingFrames(){
+        return getCachedAnimationFrames(ANI_ATLAS, "Idle/idle-b");
     }
 
     public static TextureAtlas.AtlasRegion getHouseRegion(){

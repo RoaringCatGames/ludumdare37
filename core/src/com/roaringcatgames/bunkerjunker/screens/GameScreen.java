@@ -77,6 +77,7 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
         ActionIndicatorSystem actionIndicatorSystem = new ActionIndicatorSystem();
         EnvironmentBoundsSystem environmentBoundsSystem = new EnvironmentBoundsSystem();
         PickUpSystem pickUpSystem = new PickUpSystem(this.game, world, AppConstants.BUNKER_LEFT, AppConstants.BUNKER_RIGHT);
+        PlayerAnimationSystem playerAnimationSystem = new PlayerAnimationSystem();
 
         //Required Setup
         engine.addSystem(tweenSystem);
@@ -100,6 +101,7 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
         engine.addSystem(stairSystem);
         engine.addSystem(actionIndicatorSystem);
         engine.addSystem(pickUpSystem);
+        engine.addSystem(playerAnimationSystem);
 
         //Adjustment Systems
         engine.addSystem(environmentBoundsSystem);

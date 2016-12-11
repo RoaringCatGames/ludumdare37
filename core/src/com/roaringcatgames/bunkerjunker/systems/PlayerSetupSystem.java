@@ -47,7 +47,10 @@ public class PlayerSetupSystem extends EntitySystem {
         player.add(PlayerComponent.create(engine));
         player.add(VelocityComponent.create(engine));
         player.add(AnimationComponent.create(engine)
-                .addAnimation("DEFAULT", Animations.getPlayerIdle()));
+                .addAnimation("DEFAULT", Animations.getPlayerIdle())
+                .addAnimation("WALKING", Animations.getPlayerWalking())
+                .addAnimation("PICKUP", Animations.getPlayerPickup())
+                .addAnimation("THROWING", Animations.getPlayerThrow()));
         player.add(StateComponent.create(engine)
                 .set("DEFAULT")
                 .setLooping(true));

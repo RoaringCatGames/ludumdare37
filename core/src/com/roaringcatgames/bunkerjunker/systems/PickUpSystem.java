@@ -15,6 +15,7 @@ import com.roaringcatgames.bunkerjunker.components.CameraComponent;
 import com.roaringcatgames.bunkerjunker.components.PlayerComponent;
 import com.roaringcatgames.bunkerjunker.components.SupplyComponent;
 import com.roaringcatgames.bunkerjunker.utils.Box2DUtil;
+import com.roaringcatgames.bunkerjunker.utils.PlayerStateUtil;
 import com.roaringcatgames.kitten2d.ashley.K2ComponentMappers;
 import com.roaringcatgames.kitten2d.ashley.K2EntityTweenAccessor;
 import com.roaringcatgames.kitten2d.ashley.components.*;
@@ -95,9 +96,7 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
             BoundsComponent sbc = K2ComponentMappers.bounds.get(supply);
             if(bc.bounds.overlaps(sbc.bounds)){
                 // 1. set player Animation
-                StateComponent sc = K2ComponentMappers.state.get(player);
-                sc.set("PICKUP");
-                sc.setLooping(false);
+                PlayerStateUtil.setStateIfDifferent(player, "PICKUP", false);
 
                 //2. Rotate supply if flagged to do so
                 if(Mappers.supply.get(supply).isRotatedOnPickup) {
@@ -131,9 +130,7 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
         currentSupply.remove(FollowerComponent.class);
 
         // 2. set player animation
-        StateComponent sc = K2ComponentMappers.state.get(player);
-        sc.set("PICKUP");
-        sc.setLooping(false);
+        PlayerStateUtil.setStateIfDifferent(player, "PICKUP", false);
 
         // 3. Set Velocity of Supply down (maybe tween to ground?)
         TransformComponent tc = K2ComponentMappers.transform.get(currentSupply);
@@ -148,6 +145,8 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
                 .addTween(Tween.to(currentSupply, K2EntityTweenAccessor.POSITION, 0.25f)
                         .target(tc.position.x, targetY, Z.supply)));
         }else{
+            PlayerStateUtil.setStateIfDifferent(player, "THROWING", false);
+
             BoundsComponent bc = K2ComponentMappers.bounds.get(currentSupply);
             SupplyComponent spc = Mappers.supply.get(currentSupply);
             BodyComponent bdyc = BodyComponent.create(getEngine())
