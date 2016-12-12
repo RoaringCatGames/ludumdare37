@@ -1,5 +1,6 @@
 package com.roaringcatgames.bunkerjunker.systems;
 
+import aurelienribon.tweenengine.Tween;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.systems.IntervalSystem;
@@ -8,9 +9,11 @@ import com.badlogic.gdx.math.MathUtils;
 import com.roaringcatgames.bunkerjunker.AppConstants;
 import com.roaringcatgames.bunkerjunker.Assets;
 import com.roaringcatgames.kitten2d.ashley.K2ComponentMappers;
+import com.roaringcatgames.kitten2d.ashley.K2EntityTweenAccessor;
 import com.roaringcatgames.kitten2d.ashley.components.TextComponent;
 import com.roaringcatgames.kitten2d.ashley.components.TextureComponent;
 import com.roaringcatgames.kitten2d.ashley.components.TransformComponent;
+import com.roaringcatgames.kitten2d.ashley.components.TweenComponent;
 
 /**
  *
@@ -59,9 +62,17 @@ public class TimerSystem extends IntervalSystem {
         engine.addEntity(timer);
     }
 
+    boolean triggeredLastMinute = false;
     @Override
     protected void updateInterval() {
         elapsedTime += getInterval();
+
+        if(!triggeredLastMinute && elapsedTime > 60*3f){
+            timer.add(TweenComponent.create(getEngine())
+                .addTween(Tween.to(timer, K2EntityTweenAccessor.COLOR, 0.5f)
+                    .target(Color.RED.r, Color.RED.g, Color.RED.b)
+                    .repeatYoyo(Tween.INFINITY, 0f)));
+        }
         if(timer !=null) {
             TextComponent tc = K2ComponentMappers.text.get(timer);
             tc.setText(getTime());

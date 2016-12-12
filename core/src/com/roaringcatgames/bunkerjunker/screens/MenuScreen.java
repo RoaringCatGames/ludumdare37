@@ -40,12 +40,14 @@ public class MenuScreen extends LazyInitScreen implements InputProcessor{
     public void show() {
         super.show();
         game.addInputProcessor(this);
+        game.playBgMusic(AppConstants.INTRO_BG_MUSIC);
     }
 
     @Override
     public void hide(){
         super.hide();
         game.removeInputProcessor(this);
+
     }
 
     @Override

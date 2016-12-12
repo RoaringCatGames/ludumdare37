@@ -27,17 +27,41 @@ public class BackgroundSetupSystem extends EntitySystem {
     public void addedToEngine(Engine engine) {
         super.addedToEngine(engine);
 
-        Entity house = engine.createEntity();
-        house.add(TransformComponent.create(engine)
-            .setPosition(-35f, 22.78f, Z.rooms));
-        house.add(TextureComponent.create(engine)
-            .setRegion(Assets.getHouseRegion()));
-        engine.addEntity(house);
+        Entity houseA = engine.createEntity();
+        houseA.add(TransformComponent.create(engine)
+                .setPosition(-54.5f, 19.78f, Z.rooms));
+        houseA.add(TextureComponent.create(engine)
+                .setRegion(Assets.getHouseARegion()));
+        engine.addEntity(houseA);
+        Entity houseB = engine.createEntity();
+        houseB.add(TransformComponent.create(engine)
+                .setPosition(-19f, 19.78f, Z.rooms));
+        houseB.add(TextureComponent.create(engine)
+                .setRegion(Assets.getHouseBRegion()));
+        engine.addEntity(houseB);
+
+
+
+
+
+        Entity roofA = engine.createEntity();
+        roofA.add(TransformComponent.create(engine)
+                .setPosition(-58f, 55f, Z.rooms));
+        roofA.add(TextureComponent.create(engine)
+                .setRegion(Assets.getRoofARegion()));
+        engine.addEntity(roofA);
+
+        Entity roofB = engine.createEntity();
+        roofB.add(TransformComponent.create(engine)
+                .setPosition(-18f, 55f, Z.rooms));
+        roofB.add(TextureComponent.create(engine)
+                .setRegion(Assets.getRoofBRegion()));
+        engine.addEntity(roofB);
 
         Entity bunker = engine.createEntity();
         float x = AppConstants.BUNKER_LEFT + (AppConstants.BUNKER_RIGHT-AppConstants.BUNKER_LEFT)/2f;
         bunker.add(TransformComponent.create(engine)
-            .setPosition(x, -7.75f, Z.rooms));
+            .setPosition(x, -7.75f, Z.bunker));
         bunker.add(TextureComponent.create(engine)
             .setRegion(Assets.getBunkerRegion()));
         engine.addEntity(bunker);

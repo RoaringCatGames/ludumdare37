@@ -26,6 +26,7 @@ public class EnvironmentBoundsSystem extends IteratingSystem {
         float x = tc.position.x;
         float y = tc.position.y;
 
-        tc.position.x = MathUtils.clamp(x, AppConstants.MIN_X_POS, (y >= 10f) ? AppConstants.MAX_X_ELEVATED : AppConstants.MAX_X_POS);
+        tc.position.x = MathUtils.clamp(x, AppConstants.MIN_X_POS, (y >= AppConstants.FIRST_FLOOR_Y && y <= AppConstants.SECOND_FLOOR_Y) ? AppConstants.MAX_X_ELEVATED_1 :
+                (y>= AppConstants.SECOND_FLOOR_Y) ? AppConstants.MAX_X_ELEVATED_2 : AppConstants.MAX_X_POS);
     }
 }

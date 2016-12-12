@@ -23,6 +23,7 @@ public class Assets {
     private static final String LOADING_ATLAS = "animations/loading.atlas";
     private static final String ANI_ATLAS = "animations/animations.atlas";
     private static final String SPRITE_ATLAS = "sprites/sprites.atlas";
+    private static final String INTRO_MUSIC = "music/intro-music.mp3";
     private static final String BG_MUSIC = "music/bunker-bg-music.mp3";
     private static final String LARGE_FONT = "fonts/kalibers-64.fnt";
     private static final String PICKUP_GRUNT = "sfx/pickup-grunt.mp3";
@@ -36,6 +37,7 @@ public class Assets {
         am.load(SPRITE_ATLAS, TEXTURE_ATLAS);
         am.finishLoading();
         am.load(ANI_ATLAS, TEXTURE_ATLAS);
+        am.load(INTRO_MUSIC, MUSIC);
         am.load(BG_MUSIC, MUSIC);
         am.load(LARGE_FONT, BITMAP_FONT);
         am.load(PICKUP_GRUNT, SOUND);
@@ -81,9 +83,20 @@ public class Assets {
     /////////////////
     //GAME SCREEN
     /////////////////
+    public static TextureAtlas.AtlasRegion getRadioRegion(){
+        return getCachedRegion(SPRITE_ATLAS, "supplies/dogfood");
+    }
+
+    /////////////////
+    //GAME SCREEN
+    /////////////////
 
     public static Music getGameBGMusic(){
         return am.get(BG_MUSIC, MUSIC);
+    }
+
+    public static Music getIntroMusic(){
+        return am.get(INTRO_MUSIC, MUSIC);
     }
 
     public static BitmapFont getFont64(){
@@ -113,9 +126,28 @@ public class Assets {
     public static Array<TextureAtlas.AtlasRegion> getPlayerThrowingFrames(){
         return getCachedAnimationFrames(ANI_ATLAS, "throw/throw");
     }
+    public static Array<TextureAtlas.AtlasRegion> getPlayerBubbleFrames(){
+        return getCachedAnimationFrames(ANI_ATLAS, "Idle/idle-b");
+    }
+    public static Array<TextureAtlas.AtlasRegion> getRadioBubbleFrames(){
+        return getCachedAnimationFrames(ANI_ATLAS, "Idle/idle-b");
+    }
 
     public static TextureAtlas.AtlasRegion getHouseRegion(){
         return getCachedRegion(SPRITE_ATLAS, "House");
+    }
+
+    public static TextureAtlas.AtlasRegion getHouseARegion(){
+        return getCachedRegion(SPRITE_ATLAS, "house-a");
+    }
+    public static TextureAtlas.AtlasRegion getHouseBRegion(){
+        return getCachedRegion(SPRITE_ATLAS, "house-b");
+    }
+    public static TextureAtlas.AtlasRegion getRoofARegion(){
+        return getCachedRegion(SPRITE_ATLAS, "roof-a");
+    }
+    public static TextureAtlas.AtlasRegion getRoofBRegion(){
+        return getCachedRegion(SPRITE_ATLAS, "roof-b");
     }
 
     public static TextureAtlas.AtlasRegion getBunkerRegion(){

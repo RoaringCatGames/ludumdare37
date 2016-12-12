@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.roaringcatgames.bunkerjunker.screens.GameScreen;
+import com.roaringcatgames.bunkerjunker.screens.IntroScreen;
 import com.roaringcatgames.bunkerjunker.screens.LoadingScreen;
 import com.roaringcatgames.bunkerjunker.screens.MenuScreen;
 import com.roaringcatgames.kitten2d.gdx.helpers.IGameProcessor;
@@ -33,6 +34,7 @@ public class BunkerJunker extends Game implements IGameProcessor {
 	////////////
 	private MenuScreen menuScreen;
 	private GameScreen gameScreen;
+	private IntroScreen introScreen;
 
 	public BunkerJunker(){
 	   super();
@@ -59,6 +61,7 @@ public class BunkerJunker extends Game implements IGameProcessor {
 
 		setScreen(new LoadingScreen(this));
 
+		introScreen = new IntroScreen(this);
 		menuScreen = new MenuScreen(this);
 		gameScreen = new GameScreen(this);
 
@@ -90,6 +93,9 @@ public class BunkerJunker extends Game implements IGameProcessor {
 			case "GAME":
 				setScreen(gameScreen);
 				break;
+			case "INTRO":
+				setScreen(introScreen);
+				break;
 		}
 	}
 
@@ -117,6 +123,11 @@ public class BunkerJunker extends Game implements IGameProcessor {
 		switch(musicName){
 			case AppConstants.GAME_BG_MUSIC:
 				bgMusic = Assets.getGameBGMusic();
+				bgMusic.setLooping(false);
+				bgMusic.setVolume(1f);
+				break;
+			case AppConstants.INTRO_BG_MUSIC:
+				bgMusic = Assets.getIntroMusic();
 				bgMusic.setLooping(false);
 				bgMusic.setVolume(1f);
 				break;
