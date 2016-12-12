@@ -97,6 +97,8 @@ public class IntroScreen extends LazyInitScreen {
 
         Gdx.app.log("MenuScreen", "Menu Loaded");
         game.playBgMusic(AppConstants.GAME_BG_MUSIC);
+
+        game.getCamera().zoom = 4.8f;
     }
 
     @Override

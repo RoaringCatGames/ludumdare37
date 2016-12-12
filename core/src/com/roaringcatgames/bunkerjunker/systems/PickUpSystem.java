@@ -7,6 +7,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.roaringcatgames.bunkerjunker.*;
@@ -276,6 +277,9 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        Vector2 v = new Vector2(screenX, screenY);
+        game.getViewport().unproject(v);
+        Gdx.app.log("GAME SCREEN", "Touched Point X: " + v.x + " Y: " + v.y);
         return false;
     }
 
