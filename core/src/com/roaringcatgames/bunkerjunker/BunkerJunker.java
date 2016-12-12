@@ -126,6 +126,11 @@ public class BunkerJunker extends Game implements IGameProcessor {
 				bgMusic.setLooping(false);
 				bgMusic.setVolume(1f);
 				break;
+			case AppConstants.INTRO_BG_MUSIC:
+				bgMusic = Assets.getIntroMusic();
+				bgMusic.setLooping(false);
+				bgMusic.setVolume(1f);
+				break;
 		}
 
 		bgMusic.play();

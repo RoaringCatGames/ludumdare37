@@ -9,9 +9,10 @@ public class Z {
     public static final float treeline = 100f;
     public static final float altTreeline = 99f;
     public static final float bushes = 90f;
+    public static final float rooms = 85f;
     public static final float dirt = 80f;
     public static final float layeredDirt = 79f;
-    public static final float rooms = 75f;
+    public static final float bunker = 60f;
     public static final float supply = 50f;
     public static final float player = 40f;
     public static final float carriedSupply = 30f;

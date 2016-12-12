@@ -19,7 +19,8 @@ public class AppConstants {
 
     public static final float MIN_X_POS = -65f;
     public static final float MAX_X_POS = 65f;
-    public static final float MAX_X_ELEVATED = -13f;
+    public static final float MAX_X_ELEVATED_2 = -13f;
+    public static final float MAX_X_ELEVATED_1 = -5f;
 
     public static final float ENCUMBERENCE_SCALE = 0.9f;
     public static final float MAX_WEIGHT = 200f;
@@ -31,6 +32,7 @@ public class AppConstants {
     public static final String INDICATOR_DROP = "DROP";
 
     public static final String GAME_BG_MUSIC = "GAME";
+    public static final String INTRO_BG_MUSIC = "INTRO";
 
     public static void setAppWH(float w, float h){
         W = w;
