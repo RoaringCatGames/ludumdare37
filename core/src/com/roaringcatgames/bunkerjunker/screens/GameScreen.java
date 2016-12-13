@@ -1,11 +1,13 @@
 package com.roaringcatgames.bunkerjunker.screens;
 
+import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.equations.Back;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -13,9 +15,11 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.roaringcatgames.bunkerjunker.AppConstants;
 import com.roaringcatgames.bunkerjunker.BunkerJunkerTweenAccessor;
+import com.roaringcatgames.bunkerjunker.components.CameraComponent;
 import com.roaringcatgames.bunkerjunker.components.PlayerComponent;
 import com.roaringcatgames.bunkerjunker.systems.*;
 import com.roaringcatgames.kitten2d.ashley.K2ComponentMappers;
+import com.roaringcatgames.kitten2d.ashley.components.TweenComponent;
 import com.roaringcatgames.kitten2d.ashley.components.VelocityComponent;
 import com.roaringcatgames.kitten2d.ashley.systems.*;
 import com.roaringcatgames.kitten2d.gdx.helpers.IGameProcessor;
@@ -117,7 +121,7 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
 
         //Debugging
 //        engine.addSystem(debugGridSystem);
-        engine.addSystem(debugRenderingSystem);
+//        engine.addSystem(debugRenderingSystem);
 //        engine.addSystem(physicsDebugSystem);
 
         Gdx.app.log("MenuScreen", "Menu Loaded");
@@ -149,11 +153,24 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
+        if(keycode == Input.Keys.Z){
+            Entity cam = engine.getEntitiesFor(Family.all(CameraComponent.class).get()).first();
+            cam.add(TweenComponent.create(engine)
+                    .addTween(Tween.to(cam, BunkerJunkerTweenAccessor.CAMERA_ZOOM, 0.5f).target(4.8f)));
+        }
+
         return false;
     }
 
+
     @Override
     public boolean keyUp(int keycode) {
+
+        if(keycode == Input.Keys.Z){
+            Entity cam = engine.getEntitiesFor(Family.all(CameraComponent.class).get()).first();
+            cam.add(TweenComponent.create(engine)
+                .addTween(Tween.to(cam, BunkerJunkerTweenAccessor.CAMERA_ZOOM, 0.5f).target(1.5f)));
+        }
         return false;
     }
 
@@ -164,9 +181,9 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Vector2 v = new Vector2(screenX, screenY);
-        game.getViewport().unproject(v);
-        Gdx.app.log("GAME SCREEN", "Touched Point X: " + v.x + " Y: " + v.y);
+//        Vector2 v = new Vector2(screenX, screenY);
+//        game.getViewport().unproject(v);
+//        //Gdx.app.log("GAME SCREEN", "Touched Point X: " + v.x + " Y: " + v.y);
         return false;
     }
 
@@ -187,11 +204,11 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
 
     @Override
     public boolean scrolled(int amount) {
-        float zoom = this.game.getCamera().zoom;
-        zoom += amount* ZOOM_SPEED;
-        this.game.getCamera().zoom = MathUtils.clamp(zoom, MIN_ZOOM, MAX_ZOOM);
-
-        Gdx.app.log("MENU SCREEN", "Scrolled " + amount + " Zoom Result " + this.game.getCamera().zoom);
+//        float zoom = this.game.getCamera().zoom;
+//        zoom += amount* ZOOM_SPEED;
+//        this.game.getCamera().zoom = MathUtils.clamp(zoom, MIN_ZOOM, MAX_ZOOM);
+//
+//        Gdx.app.log("MENU SCREEN", "Scrolled " + amount + " Zoom Result " + this.game.getCamera().zoom);
         return false;
     }
 }

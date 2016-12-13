@@ -184,7 +184,11 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
 
             //6. flip it upside down
             TransformComponent tc = K2ComponentMappers.transform.get(supply);
-            tc.setScale(tc.scale.x, tc.scale.y * -1f);
+            if(sc.isRotatedOnPickup) {
+                tc.setScale(-1f, tc.scale.y);
+            }else{
+                tc.setScale(tc.scale.x, -1f);
+            }
 
             Assets.getPickupGruntSfx().play(1f);
         }
