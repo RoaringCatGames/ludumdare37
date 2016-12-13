@@ -45,7 +45,7 @@ public class IntroSystem extends IntervalSystem implements InputProcessor {
         game.addInputProcessor(this);
 
         float playerX = 3.4f;
-        float playerY = -31.4f;
+        float playerY = -32.4f;
         //Create the Shit!!
         player = engine.createEntity();
         player.add(TransformComponent.create(engine)

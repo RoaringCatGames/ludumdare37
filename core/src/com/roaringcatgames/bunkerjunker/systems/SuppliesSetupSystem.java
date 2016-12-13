@@ -39,10 +39,31 @@ public class SuppliesSetupSystem extends EntitySystem{
         tmp.addCategoryWeight(Supplies.ENTERTAINMENT, 100);
         tmp.addCategoryWeight(Supplies.HOARDINESS, 20);
 
-        tmp = addSupplies(engine, -40f, AppConstants.FIRST_FLOOR_Y + 3.5f, 3.95f, 4f, Assets.getTVRegion(), 60f);
+        tmp = addSupplies(engine, -59.92f, 36.13f, 4f, 3.95f, Assets.getTVRegion(), 60f);
         tmp.addCategoryWeight(Supplies.ENTERTAINMENT, 20);
         tmp.addCategoryWeight(Supplies.HOARDINESS, 10);
         tmp.addCategoryWeight(Supplies.COMFORT, 10);
+
+        tmp = addSupplies(engine, -36.72553f, 34.755905f, 6f, 3.99f, Assets.getBrownCouch(), 90f);
+        tmp.addCategoryWeight(Supplies.COMFORT, 20);
+        tmp.addCategoryWeight(Supplies.HOARDINESS, 10);
+
+        tmp = addSupplies(engine, -35.178654f, 20.74028f, 6f, 3.99f, Assets.getBlueCouch(), 95f);
+        tmp.addCategoryWeight(Supplies.COMFORT, 20);
+        tmp.addCategoryWeight(Supplies.HOARDINESS, 10);
+
+        tmp = addSupplies(engine, -63.209904f, 18.86528f, 2f, 2f, Assets.getLamp(), 15f);
+        tmp.addCategoryWeight(Supplies.COMFORT, 10);
+        tmp.addCategoryWeight(Supplies.HOARDINESS, 20);
+        tmp.addCategoryWeight(Supplies.SURVIVAL, 1);
+
+        tmp = addSupplies(engine, -17.096996f, 18.1f, 2f, 2f, Assets.getPan(), 10f);
+        tmp.addCategoryWeight(Supplies.HOARDINESS, 20);
+        tmp.addCategoryWeight(Supplies.SURVIVAL, 8);
+
+        tmp = addSupplies(engine, -30.746994f, 3.54999f, 2f, 3.5f, Assets.getTable(), 110f);
+        tmp.addCategoryWeight(Supplies.HOARDINESS, 20);
+        tmp.addCategoryWeight(Supplies.COMFORT, 20);
     }
 
 

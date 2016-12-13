@@ -64,7 +64,7 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
 
         RenderingSystem renderingSystem = new RenderingSystem(game.getBatch(), game.getCamera(), AppConstants.PPM);
         TextRenderingSystem textRenderingSystem = new TextRenderingSystem(game.getBatch(), game.getGUICamera(), game.getCamera());
-        //DebugSystem debugRenderingSystem = new DebugSystem(game.getCamera());
+        DebugSystem debugRenderingSystem = new DebugSystem(game.getCamera());
         Box2DPhysicsSystem physicsSystem = new Box2DPhysicsSystem(world);
         //Box2DPhysicsDebugSystem physicsDebugSystem = new Box2DPhysicsDebugSystem(world, game.getCamera());
 
@@ -117,7 +117,7 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
 
         //Debugging
 //        engine.addSystem(debugGridSystem);
-//        engine.addSystem(debugRenderingSystem);
+        engine.addSystem(debugRenderingSystem);
 //        engine.addSystem(physicsDebugSystem);
 
         Gdx.app.log("MenuScreen", "Menu Loaded");

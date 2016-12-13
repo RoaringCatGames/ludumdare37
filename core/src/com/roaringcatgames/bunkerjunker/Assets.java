@@ -243,4 +243,24 @@ public class Assets {
     public static TextureAtlas.AtlasRegion getTVRegion(){
         return getCachedRegion(SPRITE_ATLAS, "supplies/tv");
     }
+
+    public static TextureAtlas.AtlasRegion getBrownCouch(){
+        return getCachedRegion(SPRITE_ATLAS, "supplies/couch");
+    }
+
+    public static TextureAtlas.AtlasRegion getBlueCouch(){
+        return getCachedRegion(SPRITE_ATLAS, "supplies/couch1");
+    }
+
+    public static TextureAtlas.AtlasRegion getLamp(){
+        return getCachedRegion(SPRITE_ATLAS, "supplies/lamp");
+    }
+
+    public static TextureAtlas.AtlasRegion getPan(){
+        return getCachedRegion(SPRITE_ATLAS, "supplies/pan");
+    }
+
+    public static TextureAtlas.AtlasRegion getTable(){
+        return getCachedRegion(SPRITE_ATLAS, "supplies/table");
+    }
 }
