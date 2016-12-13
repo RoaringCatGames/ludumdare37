@@ -40,16 +40,16 @@ public class IntroScreen extends LazyInitScreen {
 
         //Initializer Systems
         BackgroundSetupSystem backgroundSetupSystem = new BackgroundSetupSystem(world);
-        DebugGridSystem debugGridSystem = new DebugGridSystem(AppConstants.W * 5f, AppConstants.H * 5f, 2f);
+//        DebugGridSystem debugGridSystem = new DebugGridSystem(AppConstants.W * 5f, AppConstants.H * 5f, 2f);
         SuppliesSetupSystem suppliesSetupSystem = new SuppliesSetupSystem();
         //PlayerSetupSystem playerSetupSystem = new PlayerSetupSystem(game, AppConstants.W/2f, 4f);
         //StairSensorSetupSystem stairSetupSystem = new StairSensorSetupSystem();
 
         RenderingSystem renderingSystem = new RenderingSystem(game.getBatch(), game.getCamera(), AppConstants.PPM);
         TextRenderingSystem textRenderingSystem = new TextRenderingSystem(game.getBatch(), game.getGUICamera(), game.getCamera());
-        DebugSystem debugRenderingSystem = new DebugSystem(game.getCamera());
+//        DebugSystem debugRenderingSystem = new DebugSystem(game.getCamera());
         Box2DPhysicsSystem physicsSystem = new Box2DPhysicsSystem(world);
-        Box2DPhysicsDebugSystem physicsDebugSystem = new Box2DPhysicsDebugSystem(world, game.getCamera());
+//        Box2DPhysicsDebugSystem physicsDebugSystem = new Box2DPhysicsDebugSystem(world, game.getCamera());
 
         AnimationSystem animationSystem = new AnimationSystem();
         MovementSystem movementSystem = new MovementSystem();
@@ -72,7 +72,6 @@ public class IntroScreen extends LazyInitScreen {
 
         //Setup
         engine.addSystem(backgroundSetupSystem);
-        engine.addSystem(debugGridSystem);
         engine.addSystem(suppliesSetupSystem);
         engine.addSystem( new IntroSystem(game));
 
@@ -93,8 +92,9 @@ public class IntroScreen extends LazyInitScreen {
         engine.addSystem(textRenderingSystem);
 
         //Debugging
-        engine.addSystem(debugRenderingSystem);
-        engine.addSystem(physicsDebugSystem);
+//        engine.addSystem(debugGridSystem);
+//        engine.addSystem(debugRenderingSystem);
+//        engine.addSystem(physicsDebugSystem);
 
         Gdx.app.log("MenuScreen", "Menu Loaded");
         game.playBgMusic(AppConstants.INTRO_BG_MUSIC);

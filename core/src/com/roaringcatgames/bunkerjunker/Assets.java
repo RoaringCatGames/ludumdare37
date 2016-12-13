@@ -236,6 +236,6 @@ public class Assets {
         return getCachedRegion(SPRITE_ATLAS, "supplies/car");
     }
     public static TextureAtlas.AtlasRegion getTVRegion(){
-        return getCachedRegion(SPRITE_ATLAS, "supplies/region");
+        return getCachedRegion(SPRITE_ATLAS, "supplies/tv");
     }
 }

@@ -182,6 +182,10 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
             player.add(EncumberedComponent.create(getEngine())
                     .setWeight(sc.weight));
 
+            //6. flip it upside down
+            TransformComponent tc = K2ComponentMappers.transform.get(supply);
+            tc.setScale(tc.scale.x, tc.scale.y * -1f);
+
             Assets.getPickupGruntSfx().play(1f);
         }
     }
@@ -211,10 +215,11 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
 
             BoundsComponent bc = K2ComponentMappers.bounds.get(currentSupply);
             SupplyComponent spc = Mappers.supply.get(currentSupply);
+
             BodyComponent bdyc = BodyComponent.create(getEngine())
                     .setBody(Box2DUtil.buildBoxBody(world, false, tc.position.x, tc.position.y,
-                                                    bc.bounds.width, bc.bounds.height, tc.rotation, spc.weight, 0.8f, 0.2f));
-            bdyc.body.applyLinearImpulse(0f, -bdyc.body.getMass()*80f, bdyc.body.getWorldCenter().x, bdyc.body.getWorldCenter().y, true);
+                                                    bc.bounds.width, bc.bounds.height, tc.rotation, spc.weight/2f, 0.8f, 0.2f));
+            bdyc.body.applyLinearImpulse(0f, -bdyc.body.getMass()*60f, bdyc.body.getWorldCenter().x, bdyc.body.getWorldCenter().y, true);
             currentSupply.add(bdyc);
 
             //TRACK the Stats!!
@@ -227,7 +232,6 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
                 camEntity.add(TweenComponent.create(getEngine())
                     .addTween(Tween.to(camEntity, BunkerJunkerTweenAccessor.CAMERA_ZOOM, 0.25f)
                         .target(5f).repeatYoyo(1, 0.5f)));
-
             }
 
             Assets.getThrowGruntSfx().play(1f);
