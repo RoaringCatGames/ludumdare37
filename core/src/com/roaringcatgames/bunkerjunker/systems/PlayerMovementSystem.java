@@ -34,8 +34,8 @@ public class PlayerMovementSystem extends IteratingSystem implements InputProces
 
     private IAction playerStairToggle;
 
-    private float VELOCITY_X = 15f;
-    private float VELOCITY_Y = 15f;
+    private float VELOCITY_X = 20f;
+    private float VELOCITY_Y = 20f;
 
     private Sound stairSound;
     private boolean isPlaying = false;

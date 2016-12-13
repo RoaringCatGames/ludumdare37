@@ -66,7 +66,8 @@ public class LoadingScreen extends LazyInitScreen {
         if(Assets.am.update() && elapsedTime >= minSplashSeconds){
             Gdx.app.log("Splash Screen", "Assets are Loaded!");
             Animations.init();
-            game.switchScreens("MENU");
+            game.switchScreens("INTRO");
+//            game.switchScreens("MENU");
         }else {
             engine.update(delta);
         }

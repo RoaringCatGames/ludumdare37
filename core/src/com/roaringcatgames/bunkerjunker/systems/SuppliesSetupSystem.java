@@ -23,7 +23,7 @@ public class SuppliesSetupSystem extends EntitySystem{
     public void addedToEngine(Engine engine) {
         super.addedToEngine(engine);
 
-        addSupplies(engine, 20f, 3f, 2f, 5f, Assets.getTreeRegion(), 100f);
+        addSupplies(engine, 30f, 3f, 2f, 5f, Assets.getTreeRegion(), 100f);
         addSupplies(engine, -45f, 0.5f, 1f, 1f, Assets.getWaterRegion(), 5f);
         addSupplies(engine, -30f, AppConstants.SECOND_FLOOR_Y + 0.25f, 0.5f, 0.5f, Assets.getDogfoodRegion(), 1f);
         addSupplies(engine, AppConstants.MAX_X_POS-5f, 2f, 5f, 3f, Assets.getCarRegion(), AppConstants.MAX_WEIGHT);

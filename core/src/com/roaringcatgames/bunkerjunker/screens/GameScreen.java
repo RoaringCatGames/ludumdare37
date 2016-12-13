@@ -56,7 +56,7 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
         BackgroundSetupSystem backgroundSetupSystem = new BackgroundSetupSystem(world);
         DebugGridSystem debugGridSystem = new DebugGridSystem(AppConstants.W * 5f, AppConstants.H * 5f, 2f);
         SuppliesSetupSystem suppliesSetupSystem = new SuppliesSetupSystem();
-        PlayerSetupSystem playerSetupSystem = new PlayerSetupSystem(game, AppConstants.W/2f, 4f);
+        PlayerSetupSystem playerSetupSystem = new PlayerSetupSystem(game, 2f, 4f);
         StairSensorSetupSystem stairSetupSystem = new StairSensorSetupSystem();
 
         RenderingSystem renderingSystem = new RenderingSystem(game.getBatch(), game.getCamera(), AppConstants.PPM);
