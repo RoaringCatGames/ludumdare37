@@ -67,7 +67,7 @@ public class BunkerJunker extends Game implements IGameProcessor {
 
 	}
 
-	private float r = 1f; //181f/255f;
+	private float r = 181f/255f;
 	private float g = 216f/255f;
 	private float b = 255f/255f;
 	private float a = 255f/255f;

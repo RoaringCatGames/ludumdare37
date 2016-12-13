@@ -213,8 +213,8 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
             SupplyComponent spc = Mappers.supply.get(currentSupply);
             BodyComponent bdyc = BodyComponent.create(getEngine())
                     .setBody(Box2DUtil.buildBoxBody(world, false, tc.position.x, tc.position.y,
-                                                    bc.bounds.width, bc.bounds.height, tc.rotation, spc.weight, 0.5f, 0.5f));
-            bdyc.body.applyLinearImpulse(0f, -bdyc.body.getMass()*100f, bdyc.body.getWorldCenter().x, bdyc.body.getWorldCenter().y, true);
+                                                    bc.bounds.width, bc.bounds.height, tc.rotation, spc.weight, 0.8f, 0.2f));
+            bdyc.body.applyLinearImpulse(0f, -bdyc.body.getMass()*80f, bdyc.body.getWorldCenter().x, bdyc.body.getWorldCenter().y, true);
             currentSupply.add(bdyc);
 
             //TRACK the Stats!!
