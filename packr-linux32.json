@@ -1,0 +1,16 @@
+{
+  "platform": "linux32",
+  "jdk": "/Users/barry/DevTools/openjdks/openjdk-1.7.0-u80-unofficial-linux-i586-image.zip",
+  "executable": "junkinthebunk",
+  "classpath": [
+    "/Users/barry/git-repos/bunker-junker/desktop/build/libs/junkinthebunk-1.0.jar"
+  ],
+  "mainclass": "com.roaringcatgames.bunkerjunker.desktop.DesktopLauncher",
+  "vmargs": [
+    "-Xmx512m"
+  ],
+  "resources": [
+  ],
+  "minimizejre": "soft",
+  "outdir": "JunkInTheBunk_lin32"
+}

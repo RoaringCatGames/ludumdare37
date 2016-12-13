@@ -23,7 +23,7 @@ allprojects {
         aiVersion = '1.7.0'
         ashleyExtensionsVersion = '0.4.4-SNAPSHOT'
         tweenEngineVersion = '6.3.4'
-        outputName = 'bunker-junker'
+        outputName = 'junkinthebunk'
     }
 
     repositories {
