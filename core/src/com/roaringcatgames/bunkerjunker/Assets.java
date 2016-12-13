@@ -84,7 +84,7 @@ public class Assets {
     //GAME SCREEN
     /////////////////
     public static TextureAtlas.AtlasRegion getRadioRegion(){
-        return getCachedRegion(SPRITE_ATLAS, "supplies/dogfood");
+        return getCachedRegion(SPRITE_ATLAS, "pickups/radio");
     }
 
     /////////////////
@@ -129,8 +129,11 @@ public class Assets {
     public static Array<TextureAtlas.AtlasRegion> getPlayerBubbleFrames(){
         return getCachedAnimationFrames(ANI_ATLAS, "Idle/idle-b");
     }
+    public static Array<TextureAtlas.AtlasRegion> getPlayerHammeringFrames(){
+        return getCachedAnimationFrames(ANI_ATLAS, "hammer/hammer");
+    }
     public static Array<TextureAtlas.AtlasRegion> getRadioBubbleFrames(){
-        return getCachedAnimationFrames(ANI_ATLAS, "Idle/idle-b");
+        return getCachedAnimationFrames(ANI_ATLAS, "speech/meteorspeech");
     }
 
     public static TextureAtlas.AtlasRegion getHouseRegion(){

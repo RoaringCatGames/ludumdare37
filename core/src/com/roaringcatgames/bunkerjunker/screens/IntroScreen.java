@@ -85,6 +85,7 @@ public class IntroScreen extends LazyInitScreen {
         engine.addSystem(followerSystem);
         engine.addSystem(boundsSystem);
         engine.addSystem(cameraPositionSystem);
+        //engine.addSystem(pickUpSystem);
 
 
         //Rendering
@@ -96,9 +97,9 @@ public class IntroScreen extends LazyInitScreen {
         engine.addSystem(physicsDebugSystem);
 
         Gdx.app.log("MenuScreen", "Menu Loaded");
-        game.playBgMusic(AppConstants.GAME_BG_MUSIC);
+        game.playBgMusic(AppConstants.INTRO_BG_MUSIC);
 
-        game.getCamera().zoom = 4.8f;
+        //game.getCamera().zoom = 2.8f;
     }
 
     @Override

@@ -277,9 +277,6 @@ public class PickUpSystem extends IteratingSystem implements InputProcessor{
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Vector2 v = new Vector2(screenX, screenY);
-        game.getViewport().unproject(v);
-        Gdx.app.log("GAME SCREEN", "Touched Point X: " + v.x + " Y: " + v.y);
         return false;
     }
 
