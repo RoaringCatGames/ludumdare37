@@ -25,6 +25,7 @@ public class Assets {
     private static final String SPRITE_ATLAS = "sprites/sprites.atlas";
     private static final String INTRO_MUSIC = "music/intro-music.mp3";
     private static final String BG_MUSIC = "music/bunker-bg-music.mp3";
+    private static final String SMALL_FONT = "fonts/kalibers-24.fnt";
     private static final String LARGE_FONT = "fonts/kalibers-64.fnt";
     private static final String PICKUP_GRUNT = "sfx/pickup-grunt.mp3";
     private static final String THROW_GRUNT = "sfx/throw-grunt.mp3";
@@ -39,6 +40,7 @@ public class Assets {
         am.load(ANI_ATLAS, TEXTURE_ATLAS);
         am.load(INTRO_MUSIC, MUSIC);
         am.load(BG_MUSIC, MUSIC);
+        am.load(SMALL_FONT, BITMAP_FONT);
         am.load(LARGE_FONT, BITMAP_FONT);
         am.load(PICKUP_GRUNT, SOUND);
         am.load(THROW_GRUNT, SOUND);
@@ -101,6 +103,10 @@ public class Assets {
 
     public static BitmapFont getFont64(){
         return am.get(LARGE_FONT, BITMAP_FONT);
+    }
+
+    public static BitmapFont getFont16(){
+        return am.get(SMALL_FONT, BITMAP_FONT);
     }
 
     public static Sound getPickupGruntSfx(){

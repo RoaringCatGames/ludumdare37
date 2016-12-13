@@ -34,6 +34,8 @@ public class AppConstants {
     public static final String GAME_BG_MUSIC = "GAME";
     public static final String INTRO_BG_MUSIC = "INTRO";
 
+    public static boolean IsGameEnded = false;
+
     public static void setAppWH(float w, float h){
         W = w;
         H = h;

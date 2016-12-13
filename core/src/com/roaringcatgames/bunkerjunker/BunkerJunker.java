@@ -111,7 +111,9 @@ public class BunkerJunker extends Game implements IGameProcessor {
 
 	@Override
 	public void pauseBgMusic() {
-
+		if(bgMusic != null && bgMusic.isPlaying()){
+			bgMusic.pause();
+		}
 	}
 
 	@Override

@@ -177,7 +177,7 @@ public class BackgroundSetupSystem extends EntitySystem {
 
         for(int i=0;i<width;i++){
             float x = (tileMinX) + halfTile + (tileSize* i);
-            float y = 1.345f;
+            float y = 1.155f;
 
             Entity bushes = engine.createEntity();
             bushes.add(TextureComponent.create(engine)
@@ -270,6 +270,7 @@ public class BackgroundSetupSystem extends EntitySystem {
 
 
     private float[] bunkerXVals = new float[]{
+            -85f,
             3.25281f,
             3.0135764f,
             3.0135765f,
@@ -298,10 +299,12 @@ public class BackgroundSetupSystem extends EntitySystem {
             26.133335f,
             23.641663f,
             21.916668f,
-            21.916668f
+            21.916668f,
+            85f
     };
 
     private float[] bunkerYVals = new float[]{
+            -0.35275555f,
             -0.35275555f,
             -2.8661413f,
             -5.379527f,
@@ -330,6 +333,7 @@ public class BackgroundSetupSystem extends EntitySystem {
             -15.874995f,
             -11.8499975f,
             -10.124995f,
+            -0.7333f,
             -0.7333f
     };
 }

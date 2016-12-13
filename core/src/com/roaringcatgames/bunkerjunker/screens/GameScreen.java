@@ -2,6 +2,7 @@ package com.roaringcatgames.bunkerjunker.screens;
 
 import aurelienribon.tweenengine.equations.Back;
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
@@ -14,6 +15,8 @@ import com.roaringcatgames.bunkerjunker.AppConstants;
 import com.roaringcatgames.bunkerjunker.BunkerJunkerTweenAccessor;
 import com.roaringcatgames.bunkerjunker.components.PlayerComponent;
 import com.roaringcatgames.bunkerjunker.systems.*;
+import com.roaringcatgames.kitten2d.ashley.K2ComponentMappers;
+import com.roaringcatgames.kitten2d.ashley.components.VelocityComponent;
 import com.roaringcatgames.kitten2d.ashley.systems.*;
 import com.roaringcatgames.kitten2d.gdx.helpers.IGameProcessor;
 import com.roaringcatgames.kitten2d.gdx.screens.LazyInitScreen;
@@ -121,10 +124,23 @@ public class GameScreen extends LazyInitScreen implements InputProcessor {
         game.playBgMusic(AppConstants.GAME_BG_MUSIC);
     }
 
+    boolean hasEnded = false;
+
     @Override
     protected void update(float deltaChange) {
         float deltaToApply = Math.min(deltaChange, AppConstants.MAX_DELTA_TICK);
         engine.update(deltaToApply);
+
+        if(!hasEnded && AppConstants.IsGameEnded){
+            hasEnded = true;
+            engine.getSystem(PlayerMovementSystem.class).setProcessing(false);
+            engine.getSystem(PickUpSystem.class).setProcessing(false);
+            game.pauseBgMusic();
+
+            Entity player = engine.getEntitiesFor(Family.all(PlayerComponent.class).get()).first();
+            K2ComponentMappers.velocity.get(player).setSpeed(0f, 0f);
+            engine.addSystem(new EndOfGameSystem());
+        }
     }
 
     ////////////////////////
