@@ -30,6 +30,7 @@ public class Assets {
     private static final String PICKUP_GRUNT = "sfx/pickup-grunt.mp3";
     private static final String THROW_GRUNT = "sfx/throw-grunt.mp3";
     private static final String STAIRS = "sfx/stairs.mp3";
+    private static final String RADIO_SFX = "sfx/radio-chatter.mp3";
 
     public static AssetManager load(){
         am = new AssetManager();
@@ -45,6 +46,7 @@ public class Assets {
         am.load(PICKUP_GRUNT, SOUND);
         am.load(THROW_GRUNT, SOUND);
         am.load(STAIRS, SOUND);
+        am.load(RADIO_SFX, SOUND);
 
         return am;
     }
@@ -117,6 +119,9 @@ public class Assets {
     }
     public static Sound getStairsSfx(){
         return am.get(STAIRS, SOUND);
+    }
+    public static Sound getRadioSfx(){
+        return am.get(RADIO_SFX, SOUND);
     }
 
     public static Array<TextureAtlas.AtlasRegion> getPlayerIdleFrames(){

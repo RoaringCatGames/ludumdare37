@@ -39,7 +39,7 @@ public class SuppliesSetupSystem extends EntitySystem{
         tmp.addCategoryWeight(Supplies.ENTERTAINMENT, 100);
         tmp.addCategoryWeight(Supplies.HOARDINESS, 20);
 
-        tmp = addSupplies(engine, -40f, AppConstants.FIRST_FLOOR_Y + 2.5f, 4f, 4f, Assets.getTVRegion(), 60f);
+        tmp = addSupplies(engine, -40f, AppConstants.FIRST_FLOOR_Y + 3.5f, 3.95f, 4f, Assets.getTVRegion(), 60f);
         tmp.addCategoryWeight(Supplies.ENTERTAINMENT, 20);
         tmp.addCategoryWeight(Supplies.HOARDINESS, 10);
         tmp.addCategoryWeight(Supplies.COMFORT, 10);

@@ -129,6 +129,7 @@ public class IntroSystem extends IntervalSystem implements InputProcessor {
             AnimationComponent ac = K2ComponentMappers.animation.get(radioBubble);
             ac.setPaused(false);
             //TODO: Play Radio gibberish
+            Assets.getRadioSfx().play(0.5f);
         }else if(intervalCount == 5){
             StateComponent sc = K2ComponentMappers.state.get(player);
             sc.set("DEFAULT");
