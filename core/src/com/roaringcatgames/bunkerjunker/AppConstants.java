@@ -12,8 +12,8 @@ public class AppConstants {
     public static float W = 30f;
     public static float H = 20f;
 
-    public static final float FIRST_FLOOR_Y = 14.5f;
-    public static final float SECOND_FLOOR_Y = 29.5f;
+    public static final float FIRST_FLOOR_Y = 15.5f;
+    public static final float SECOND_FLOOR_Y = 30.5f;
     public static final float BUNKER_LEFT = 3f;
     public static final float BUNKER_RIGHT = 22f;
 
