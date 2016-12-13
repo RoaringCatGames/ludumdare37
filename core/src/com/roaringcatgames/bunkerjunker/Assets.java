@@ -263,4 +263,8 @@ public class Assets {
     public static TextureAtlas.AtlasRegion getTable(){
         return getCachedRegion(SPRITE_ATLAS, "supplies/table");
     }
+
+    public static TextureAtlas.AtlasRegion getPartnerRegion(){
+        return getCachedRegion(SPRITE_ATLAS, "supplies/wife");
+    }
 }
